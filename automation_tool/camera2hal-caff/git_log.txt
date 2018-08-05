@@ -1,0 +1,34 @@
+6d2201e CAFF: Add mipi capture setting option
+1b344a3 CAFF: Fix the properties mismatch issue in app.
+f92ba03 CAFF: Fix the app issue when set awb gain manually.
+ead7172 CAFF: Add converge-speed setting in UI.
+8feea57 CAFF: enable yami recording function.
+85a983f CAFF: enable yami preview function.
+ed695e6 Add awb color transform function in app side.
+e8e9b00 Fix the KW issues.
+2647059 Add ae and awb region function on app side.
+48af1fe Add License header for git project.
+b4cc14f Add checking copyright scripts.
+a53aef6 change the UI design according to the manual 3a doc.
+9299e21 Add property opration in Caff.
+39f7594 Clean up the log
+6db1823 Add the feature which user can select plugin in UI.
+7483005 fix the issue for displaying 320x240 resolution.
+e432805 Fix remote display issue.
+123ee0a Add remote connect functionality.
+a9e32bd Fix the displaying multi-camera issue.
+7894746 Add remote display functionality.
+2817605 Update ui interface.
+eb1cb44 Add remote control functionality.
+3db8b36 Put all kinds of pipeline properties in one structure.
+71fa6f9 Fix a compile failed issue.
+bb579fa Uptdate UI interface when pipline is changed by remote control.
+5a0e280 Eventcontrol and Pipeline module software enhancement.
+f9a57a2 Clean up the code and fix interlace mode issue.
+90e5665 Adjust position of drawing area in UI.
+0d3cd71 Connect the code of UI and eventControl.
+7fe1077 Detail function of eventControl and PipelineMange.
+103ccf3 Basic functions of eventControl and PipelineMange .
+129d0a6 Add callback functions of UI.
+f38c476 Basic functions and windows of UI.
+cd09d99 Initial empty repository

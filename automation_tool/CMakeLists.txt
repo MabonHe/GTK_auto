@@ -1,0 +1,9 @@
+cmake_minimum_required (VERSION 2.4)
+project (CameraValidation)
+
+ADD_SUBDIRECTORY(LibToolFunction)
+ADD_SUBDIRECTORY(LibSimilarityCheck)
+ADD_SUBDIRECTORY(LibContentAnalyzer)
+ADD_SUBDIRECTORY(ContentAnalyzerApp)
+ADD_SUBDIRECTORY(MondelloOutputAnalyzerApp)
+ADD_SUBDIRECTORY(gstCaffAutomation)

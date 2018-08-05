@@ -1,0 +1,18 @@
+HOW TO COMPILE:
+1 Copy this folder to target machine
+2 cd to this folder
+3 make
+
+HOW TO RUN:
+We have 2 case:
+CASE A: Config A Start A Config B Start B
+CASE B: Config A Config B Start B Start A 
+
+if you want to run caseA:
+USE Command: ./mutlicam-test caseA
+if you want to run caseB:
+USE Command: ./mutlicam-test caseB
+
+RESULT:
+If "TEST PASS!!!" was showing means testcase pass
+if "TEST FAIL!" was showing means testcase fail

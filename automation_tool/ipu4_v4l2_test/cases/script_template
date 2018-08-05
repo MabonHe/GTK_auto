@@ -1,0 +1,36 @@
+#!/bin/bash
+CASE_NAME=nnnn
+RESULT="PASS"
+DESCRIPTION=""
+
+xxxx
+
+retval=`echo $?`
+if [ $retval -eq 1  ]; then
+    RESULT="FAIL"
+    DESCRIPTION="Error, please refer to ${CASE_NAME}.log."
+fi
+
+isframe=`echo $CASE_NAME | grep "_Frame_"`
+isfps=`echo $CASE_NAME | grep "_FPS_"`
+isbin=`ls *.bin`
+bincount=`ls -l *.bin | wc -l`
+framecount=`echo $CASE_NAME | awk -F "Frame_" '{print $2}' | awk -F "_" '{print $1}'`
+
+if [[ $isframe != "" ]]; then
+    if [[ $isfps == "" ]]; then
+        if [[ $isbin == "" ]]; then
+            RESULT="FAIL"
+            DESCRIPTION="Error, no bin file saved."
+       else
+            if [[ $bincount != $framecount ]]; then
+                RESULT="FAIL"
+                DESCRIPTION="Error, the count of bin file should be $framecount."
+            fi
+        fi
+    fi
+fi
+
+echo "Test Case: $CASE_NAME" > ./${CASE_NAME}.std
+echo "Result: $RESULT" >> ./${CASE_NAME}.std
+echo "Description: $DESCRIPTION" >> ./${CASE_NAME}.std

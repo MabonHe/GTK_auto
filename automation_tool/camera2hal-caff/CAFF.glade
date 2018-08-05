@@ -1,0 +1,2895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.1 -->
+<interface>
+  <requires lib="gtk+" version="3.10"/>
+  <object class="GtkAdjustment" id="AwbBGainAdjustment">
+    <property name="upper">255</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="AwbGGainAdjustment">
+    <property name="upper">255</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="AwbRGainAdjustment">
+    <property name="upper">255</property>
+    <property name="step_increment">1.0000000002235174</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="AwbShiftBScaleAdjustment">
+    <property name="upper">255</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="AwbShiftGScaleAdjustment">
+    <property name="upper">255</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="AwbShiftRScaleAdjustment">
+    <property name="upper">255</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="BackLightAdjustment">
+    <property name="upper">15</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="BrightnessAdjustment">
+    <property name="lower">-128</property>
+    <property name="upper">127</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="ContrastAdjustment">
+    <property name="lower">-128</property>
+    <property name="upper">127</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="ExposureEvAdjustment">
+    <property name="lower">-4</property>
+    <property name="upper">4</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="ExposureGainAdjustment">
+    <property name="upper">60</property>
+    <property name="step_increment">0.10000000000000001</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="ExposureTimeAdjustment">
+    <property name="upper">1000000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="HueAdjustment">
+    <property name="lower">-128</property>
+    <property name="upper">127</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="IRISLevelAdjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="NoiseFileterAdjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="SharpnessAdjustment">
+    <property name="lower">-128</property>
+    <property name="upper">127</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="SpatialLevelAdjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="TemporalLevelAdjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="Weight0Adjustment">
+    <property name="upper">1000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="Weight1Adjustment">
+    <property name="upper">1000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="Weight2Adjustment">
+    <property name="upper">1000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="Weight3Adjustment">
+    <property name="upper">1000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="Weight4Adjustment">
+    <property name="upper">1000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="WindowSizeAdjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="saturationAdjustment">
+    <property name="lower">-128</property>
+    <property name="upper">127</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkWindow" id="Main">
+    <property name="width_request">1854</property>
+    <property name="height_request">1020</property>
+    <property name="can_focus">True</property>
+    <property name="halign">end</property>
+    <property name="valign">center</property>
+    <property name="resizable">False</property>
+    <property name="icon">intel.png</property>
+    <property name="gravity">south-east</property>
+    <child>
+      <object class="GtkFixed" id="MainPage">
+        <property name="width_request">1854</property>
+        <property name="height_request">1020</property>
+        <property name="can_focus">True</property>
+        <child>
+          <object class="GtkLabel" id="LableStatus">
+            <property name="width_request">60</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Status: </property>
+            <property name="lines">1</property>
+          </object>
+          <packing>
+            <property name="y">991</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="LableCameraNumber">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Camera Number: </property>
+          </object>
+          <packing>
+            <property name="x">1488</property>
+            <property name="y">52</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="LableCameraIndex">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Camera Index: </property>
+          </object>
+          <packing>
+            <property name="x">1488</property>
+            <property name="y">93</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="ComboCameraIndex">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="valign">center</property>
+            <items>
+              <item id="CameraId0" translatable="yes">0</item>
+              <item id="CameraId1" translatable="yes">1</item>
+              <item id="CameraId2" translatable="yes">2</item>
+              <item id="CameraId3" translatable="yes">3</item>
+            </items>
+          </object>
+          <packing>
+            <property name="x">1621</property>
+            <property name="y">85</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="SnapshotButton">
+            <property name="label" translatable="yes">SnapShot</property>
+            <property name="name">30</property>
+            <property name="width_request">80</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">1769</property>
+            <property name="y">986</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="SeparatorH">
+            <property name="width_request">1475</property>
+            <property name="height_request">10</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="y">975</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="SeparatorV">
+            <property name="width_request">10</property>
+            <property name="height_request">1020</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+          </object>
+          <packing>
+            <property name="x">1470</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="ComboCameraNumber">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="halign">start</property>
+            <property name="valign">center</property>
+            <items>
+              <item id="CameraNum1" translatable="yes">1</item>
+              <item id="CameraNum2" translatable="yes">2</item>
+              <item id="CameraNum3" translatable="yes">3</item>
+              <item id="CameraNum4" translatable="yes">4</item>
+            </items>
+          </object>
+          <packing>
+            <property name="x">1621</property>
+            <property name="y">43</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="RemoteIPEntry">
+            <property name="width_request">100</property>
+            <property name="height_request">25</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+          </object>
+          <packing>
+            <property name="x">1566</property>
+            <property name="y">11</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="RemoteIP">
+            <property name="width_request">100</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">RemoteIP:</property>
+          </object>
+          <packing>
+            <property name="x">1474</property>
+            <property name="y">16</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkNotebook" id="NotebookControls">
+            <property name="width_request">370</property>
+            <property name="height_request">755</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="opacity">0.98999999999999999</property>
+            <property name="halign">start</property>
+            <property name="valign">start</property>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow2">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="shadow_type">in</property>
+                <child>
+                  <object class="GtkViewport" id="GeneralSettingViewPort">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkFixed" id="GeneralSettingFixed">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkLabel" id="IOMode">
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">I/O-Mode:</property>
+                          </object>
+                          <packing>
+                            <property name="y">12</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="IOModeCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="IOuserptr" translatable="yes">userptr</item>
+                              <item id="IOmmap" translatable="yes">mmap</item>
+                              <item id="IOdma" translatable="yes">dma</item>
+                              <item id="IOdma_import" translatable="yes">dma_import</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">95</property>
+                            <property name="y">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="LableCameraFormat">
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="valign">start</property>
+                            <property name="label" translatable="yes">Format: </property>
+                          </object>
+                          <packing>
+                            <property name="x">7</property>
+                            <property name="y">52</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="FmtCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="FmtYUY2" translatable="yes">YUY2</item>
+                              <item id="FmtNV12" translatable="yes">NV12</item>
+                              <item id="FmtUYVY" translatable="yes">UYVY</item>
+                              <item id="FmtBGR" translatable="yes">BGR</item>
+                              <item id="FmtRGB16" translatable="yes">RGB16</item>
+                              <item id="FmtRGBx" translatable="yes">RGBx</item>
+                              <item id="FmtBGRx" translatable="yes">BGRx</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">96</property>
+                            <property name="y">43</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="InterlaceMode">
+                            <property name="label" translatable="yes">InterlaceMode</property>
+                            <property name="width_request">100</property>
+                            <property name="height_request">25</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="resize_mode">queue</property>
+                            <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">221</property>
+                            <property name="y">47</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ResolutionLabel">
+                            <property name="width_request">90</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Resolution:</property>
+                          </object>
+                          <packing>
+                            <property name="y">92</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="ResolutionCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="resize_mode">queue</property>
+                            <items>
+                              <item id="Reso320x240" translatable="yes">320x240</item>
+                              <item id="Reso640x480" translatable="yes">640x480</item>
+                              <item id="Reso720x480" translatable="yes">720x480</item>
+                              <item id="Reso720x576" translatable="yes">720x576</item>
+                              <item id="Reso1280x768" translatable="yes">1280x768</item>
+                              <item id="Reso1920x1088" translatable="yes">1920x1088</item>
+                              <item id="Reso896x480" translatable="yes">896x480</item>
+                              <item id="Reso1280x720" translatable="yes">1280x720</item>
+                              <item id="Reso1280x800" translatable="yes">1280x800</item>
+                              <item id="Reso1920x1080" translatable="yes">1920x1080</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">98</property>
+                            <property name="y">82</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="DeinterlaceCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="opacity">0.9882352941176471</property>
+                            <items>
+                              <item id="DeinterlaceSw" translatable="yes">sw_bob</item>
+                              <item id="DeinterlaceHw" translatable="yes">hw_bob</item>
+                              <item id="DeinterlaceNone" translatable="yes">none</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">224</property>
+                            <property name="y">82</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator4">
+                            <property name="width_request">360</property>
+                            <property name="height_request">5</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">163</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="deviceNameLabel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">DeviceName:</property>
+                          </object>
+                          <packing>
+                            <property name="y">133</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="DeviceNameCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="Device-tpg" translatable="yes">tpg</item>
+                              <item id="Device-ov13860" translatable="yes">ov13860</item>
+                              <item id="Device-ov13860-be" translatable="yes">ov13860-be</item>
+                              <item id="Device-mondello" translatable="yes">mondello</item>
+                              <item id="Device-imx185" translatable="yes">imx185</item>
+                              <item id="Device-imx185-be" translatable="yes">imx185-be</item>
+                              <item id="Device-mondello-mipi" translatable="yes">mondello-mipi</item>
+                              <item id="Device-mondello-mipi-2" translatable="yes">mondello-mipi-2</item>
+                              <item id="Device-mondello-2" translatable="yes">mondello-2</item>
+                              <item id="Device-ov10635-vc" translatable="yes">ov10635-vc</item>
+                              <item id="Device-ov10635-vc-2" translatable="yes">ov10635-vc-2</item>
+                              <item id="Device-ov10635-vc-3" translatable="yes">ov10635-vc-3</item>
+                              <item id="Device-ov10635-vc-4" translatable="yes">ov10635-vc-4</item>
+                              <item id="Device-magna" translatable="yes">magna</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">98</property>
+                            <property name="y">126</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="IRISMode">
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">IRISMode:</property>
+                          </object>
+                          <packing>
+                            <property name="y">183</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="IRISModeCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="IRISauto" translatable="yes">auto</item>
+                              <item id="IRISmanual" translatable="yes">manual</item>
+                              <item id="IRISspecific_lens" translatable="yes">specific_lens</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">98</property>
+                            <property name="y">172</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="IRISLevel">
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">IRIS-Level:</property>
+                          </object>
+                          <packing>
+                            <property name="x">1</property>
+                            <property name="y">217</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AeModeLabel">
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">AeMode:</property>
+                          </object>
+                          <packing>
+                            <property name="x">3</property>
+                            <property name="y">250</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="AeModeCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="AeMode-auto" translatable="yes">auto</item>
+                              <item id="AeMode-manual" translatable="yes">manual</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">80</property>
+                            <property name="y">242</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ExposureTime">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">ExposureTime:</property>
+                          </object>
+                          <packing>
+                            <property name="y">287</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="IRISLevelScale">
+                            <property name="width_request">260</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">IRISLevelAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">85</property>
+                            <property name="y">216</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="ExposureTimeSpinButton">
+                            <property name="width_request">101</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">ExposureTimeAdjustment</property>
+                          </object>
+                          <packing>
+                            <property name="x">112</property>
+                            <property name="y">280</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ExposureGain">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">ExposureGain:</property>
+                            <property name="ellipsize">middle</property>
+                          </object>
+                          <packing>
+                            <property name="y">320</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ExposureEv">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">ExposureEv:</property>
+                          </object>
+                          <packing>
+                            <property name="y">437</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="ExposureEvScale">
+                            <property name="width_request">238</property>
+                            <property name="height_request">5</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">ExposureEvAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">110</property>
+                            <property name="y">438</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator13">
+                            <property name="width_request">362</property>
+                            <property name="height_request">5</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">467</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="AwbModeCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="active">0</property>
+                            <items>
+                              <item id="Awbauto" translatable="yes">auto</item>
+                              <item id="Awbpartly_overcast" translatable="yes">partly_overcast</item>
+                              <item id="Awbfully_overcast" translatable="yes">fully_overcast</item>
+                              <item id="Awbfluorescent" translatable="yes">fluorescent</item>
+                              <item id="Awbincandescent" translatable="yes">incandescent</item>
+                              <item id="Awbsunset" translatable="yes">sunset</item>
+                              <item id="Awbvideo_conferencing" translatable="yes">video_conferencing</item>
+                              <item id="Awbdaylight" translatable="yes">daylight</item>
+                              <item id="Awbcct_range" translatable="yes">cct_range</item>
+                              <item id="Awbwhite_point" translatable="yes">white_point</item>
+                              <item id="Awbmanual_gain" translatable="yes">manual_gain</item>
+                              <item id="Awbcolor_transform" translatable="yes">color_transform</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">98</property>
+                            <property name="y">475</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="WhiteBalanceMode">
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="valign">start</property>
+                            <property name="label" translatable="yes">WBMode:</property>
+                          </object>
+                          <packing>
+                            <property name="x">5</property>
+                            <property name="y">483</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbRangeLabel">
+                            <property name="width_request">40</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">AwbRange:</property>
+                          </object>
+                          <packing>
+                            <property name="x">8</property>
+                            <property name="y">521</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="AwbRangeEntry">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">96</property>
+                            <property name="y">514</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="CoordinateLabel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Coordinate:</property>
+                          </object>
+                          <packing>
+                            <property name="y">557</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="WPCoordinateEntry">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">96</property>
+                            <property name="y">551</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbShiftLabel">
+                            <property name="width_request">90</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Awb-Shift:</property>
+                          </object>
+                          <packing>
+                            <property name="x">3</property>
+                            <property name="y">724</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbShiftR">
+                            <property name="width_request">20</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="opacity">0.98999999999999999</property>
+                            <property name="label" translatable="yes">R:</property>
+                          </object>
+                          <packing>
+                            <property name="x">14</property>
+                            <property name="y">749</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="AwbShiftRScale">
+                            <property name="width_request">280</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="halign">baseline</property>
+                            <property name="adjustment">AwbShiftRScaleAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">30</property>
+                            <property name="y">749</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbShiftG">
+                            <property name="width_request">20</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">G:</property>
+                          </object>
+                          <packing>
+                            <property name="x">14</property>
+                            <property name="y">775</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="AwbShiftGScale">
+                            <property name="width_request">280</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">AwbShiftGScaleAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">30</property>
+                            <property name="y">775</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbShiftB">
+                            <property name="width_request">20</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">B:</property>
+                          </object>
+                          <packing>
+                            <property name="x">14</property>
+                            <property name="y">800</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="AwbShiftBScale">
+                            <property name="width_request">280</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">AwbShiftBScaleAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">30</property>
+                            <property name="y">800</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator14">
+                            <property name="width_request">362</property>
+                            <property name="height_request">5</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">821</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="RegionLabel">
+                            <property name="width_request">70</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Region:</property>
+                          </object>
+                          <packing>
+                            <property name="y">837</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="RegionCombox">
+                            <property name="width_request">70</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="none" translatable="yes">none</item>
+                              <item id="ae_region" translatable="yes">ae_region</item>
+                              <item id="awb_region" translatable="yes">awb_region</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">75</property>
+                            <property name="y">829</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="Region0Entry">
+                            <property name="width_request">200</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">5</property>
+                            <property name="y">872</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="Region1Entry">
+                            <property name="width_request">200</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">5</property>
+                            <property name="y">909</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="Weight1Spinbutton">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="text" translatable="yes">0</property>
+                            <property name="adjustment">Weight1Adjustment</property>
+                          </object>
+                          <packing>
+                            <property name="x">216</property>
+                            <property name="y">909</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="Region2Entry">
+                            <property name="width_request">200</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">5</property>
+                            <property name="y">945</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="Weight2Spinbutton">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="text" translatable="yes">0</property>
+                            <property name="adjustment">Weight2Adjustment</property>
+                          </object>
+                          <packing>
+                            <property name="x">216</property>
+                            <property name="y">944</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="Region3Entry">
+                            <property name="width_request">200</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">5</property>
+                            <property name="y">982</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="Weight3Spinbutton">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="text" translatable="yes">0</property>
+                            <property name="adjustment">Weight3Adjustment</property>
+                          </object>
+                          <packing>
+                            <property name="x">216</property>
+                            <property name="y">980</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="Region4Entry">
+                            <property name="width_request">200</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="halign">center</property>
+                          </object>
+                          <packing>
+                            <property name="x">5</property>
+                            <property name="y">1018</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="Weight4Spinbutton">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="text" translatable="yes">0</property>
+                            <property name="adjustment">Weight4Adjustment</property>
+                          </object>
+                          <packing>
+                            <property name="x">216</property>
+                            <property name="y">1017</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="WindowSizeLabel">
+                            <property name="width_request">21</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">WindowSize:</property>
+                          </object>
+                          <packing>
+                            <property name="x">2</property>
+                            <property name="y">1053</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="WindowSizeScale">
+                            <property name="width_request">250</property>
+                            <property name="height_request">5</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">WindowSizeAdjustment</property>
+                            <property name="round_digits">0</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">90</property>
+                            <property name="y">1054</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="Weight0Spinbutton">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="text" translatable="yes">0</property>
+                            <property name="adjustment">Weight0Adjustment</property>
+                          </object>
+                          <packing>
+                            <property name="x">216</property>
+                            <property name="y">870</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbRangeEg">
+                            <property name="width_request">70</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">(1800~15000)</property>
+                          </object>
+                          <packing>
+                            <property name="x">263</property>
+                            <property name="y">513</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ExposureGainEg">
+                            <property name="width_request">80</property>
+                            <property name="height_request">28</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">(0.0~60.0)</property>
+                          </object>
+                          <packing>
+                            <property name="x">243</property>
+                            <property name="y">315</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ExposureTimeEg">
+                            <property name="width_request">80</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">(0~1000000)</property>
+                          </object>
+                          <packing>
+                            <property name="x">250</property>
+                            <property name="y">279</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ColorTransformLabel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">ColorTransform:</property>
+                          </object>
+                          <packing>
+                            <property name="x">9</property>
+                            <property name="y">665</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="ColorTransformEntry">
+                            <property name="width_request">346</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">5</property>
+                            <property name="y">691</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ColorTransformRange">
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">9 float values(-2.0 ~2.0)</property>
+                          </object>
+                          <packing>
+                            <property name="x">128</property>
+                            <property name="y">664</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AeConvergeSpeed">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">ConvergeSpeed:</property>
+                          </object>
+                          <packing>
+                            <property name="x">2</property>
+                            <property name="y">354</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="ConvergeSpeedLevel">
+                            <property name="width_request">107</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="normal" translatable="yes">normal</item>
+                              <item id="mid" translatable="yes">mid</item>
+                              <item id="low" translatable="yes">low</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">215</property>
+                            <property name="y">385</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbRGainLabel">
+                            <property name="width_request">70</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Gain-R:</property>
+                          </object>
+                          <packing>
+                            <property name="x">7</property>
+                            <property name="y">585</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbGGainLabel">
+                            <property name="width_request">70</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Gain-G:</property>
+                          </object>
+                          <packing>
+                            <property name="x">7</property>
+                            <property name="y">610</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AwbBGainLabel">
+                            <property name="width_request">70</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Gain-B:</property>
+                          </object>
+                          <packing>
+                            <property name="x">7</property>
+                            <property name="y">637</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="AwbRGainScale">
+                            <property name="width_request">270</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">AwbRGainAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">65</property>
+                            <property name="y">586</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="AwbGGainScale">
+                            <property name="width_request">270</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">AwbGGainAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">65</property>
+                            <property name="y">611</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="AwbBGainScale">
+                            <property name="width_request">270</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">AwbBGainAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">65</property>
+                            <property name="y">636</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="MipiCapture">
+                            <property name="label" translatable="yes">MipiCapture</property>
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0.50999999046325684</property>
+                            <property name="draw_indicator">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">222</property>
+                            <property name="y">11</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ConvergeMode">
+                            <property name="width_request">55</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Mode:</property>
+                          </object>
+                          <packing>
+                            <property name="x">3</property>
+                            <property name="y">396</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ConvergeLevel">
+                            <property name="width_request">50</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Level:</property>
+                          </object>
+                          <packing>
+                            <property name="x">166</property>
+                            <property name="y">394</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="ConvergeSpeedMode">
+                            <property name="width_request">85</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="Fromaiq" translatable="yes">aiq</item>
+                              <item id="Fromhal" translatable="yes">hal</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">55</property>
+                            <property name="y">388</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="VirtualChannelCheck">
+                            <property name="label" translatable="yes">VCEnable</property>
+                            <property name="width_request">80</property>
+                            <property name="height_request">25</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">253</property>
+                            <property name="y">130</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSpinButton" id="ExposureGainSpinButton">
+                            <property name="width_request">128</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="input_purpose">digits</property>
+                            <property name="adjustment">ExposureGainAdjustment</property>
+                            <property name="digits">1</property>
+                          </object>
+                          <packing>
+                            <property name="x">113</property>
+                            <property name="y">315</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="fisheye">
+                            <property name="width_request">70</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Fisheye:</property>
+                            <property name="ellipsize">start</property>
+                          </object>
+                          <packing>
+                            <property name="x">185</property>
+                            <property name="y">242</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="FisheyeModecomboboxtext">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="fisheyemode-rearview" translatable="yes">rearview</item>
+                              <item id="fisheyemode-hitchview" translatable="yes">hitchview</item>
+                              <item id="fisheyemode-off" translatable="yes">off</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">255</property>
+                            <property name="y">242</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="GeneralSettingLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">GeneralSetting</property>
+              </object>
+              <packing>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="scrolledwindow1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="shadow_type">in</property>
+                <child>
+                  <object class="GtkViewport" id="viewport1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkFixed" id="ManualPageFixed">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <child>
+                          <object class="GtkLabel" id="DayNightMode">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Day-Night:</property>
+                          </object>
+                          <packing>
+                            <property name="y">14</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="DayNightCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="DayNight-Day" translatable="yes">day-mode</item>
+                              <item id="DayNight-Night" translatable="yes">night-mode</item>
+                              <item id="DayNight-Auto" translatable="yes">auto</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">5</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator1">
+                            <property name="width_request">361</property>
+                            <property name="height_request">1</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">44</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="ImageAdjustLabel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">21</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Image-adjustment:</property>
+                          </object>
+                          <packing>
+                            <property name="x">13</property>
+                            <property name="y">46</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="Sharpness">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Sharpness:</property>
+                          </object>
+                          <packing>
+                            <property name="y">75</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="SharpnessScale">
+                            <property name="width_request">240</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">SharpnessAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">75</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="Brightness">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Brightness:</property>
+                          </object>
+                          <packing>
+                            <property name="x">1</property>
+                            <property name="y">98</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="BrightnessScale">
+                            <property name="width_request">240</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">BrightnessAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">98</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="Contrast">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Contrast:</property>
+                          </object>
+                          <packing>
+                            <property name="x">8</property>
+                            <property name="y">121</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="ContrastScale">
+                            <property name="width_request">240</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">ContrastAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">121</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="Hue">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Hue:</property>
+                          </object>
+                          <packing>
+                            <property name="x">23</property>
+                            <property name="y">142</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="HueScale">
+                            <property name="width_request">240</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">HueAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">144</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="Saturation">
+                            <property name="width_request">101</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Saturation:</property>
+                          </object>
+                          <packing>
+                            <property name="x">1</property>
+                            <property name="y">163</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="SaturationScale">
+                            <property name="width_request">240</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">saturationAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">165</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator2">
+                            <property name="width_request">361</property>
+                            <property name="height_request">1</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">187</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="BacklightSetting">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">BackLight:</property>
+                          </object>
+                          <packing>
+                            <property name="x">3</property>
+                            <property name="y">192</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="WdrMode">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">WDR-mode:</property>
+                          </object>
+                          <packing>
+                            <property name="y">218</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="WdrCombox">
+                            <property name="width_request">90</property>
+                            <property name="height_request">29</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="Wdrauto" translatable="yes">auto</item>
+                              <item id="Wdron" translatable="yes">on</item>
+                              <item id="Wdroff" translatable="yes">off</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">211</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="BlcArea">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">BLC-Area:</property>
+                          </object>
+                          <packing>
+                            <property name="x">7</property>
+                            <property name="y">254</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="BlcAreaCombox">
+                            <property name="width_request">90</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="Blcon" translatable="yes">on</item>
+                              <item id="Blcoff" translatable="yes">off</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">247</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="WdrLevel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">WDR-Level:</property>
+                          </object>
+                          <packing>
+                            <property name="x">3</property>
+                            <property name="y">286</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="WdrLevelScale">
+                            <property name="width_request">240</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">BackLightAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">287</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator3">
+                            <property name="width_request">361</property>
+                            <property name="height_request">1</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">309</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="NoiseReduction">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">NoiseReduction:</property>
+                          </object>
+                          <packing>
+                            <property name="y">318</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="NoiseReductionMode">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Mode:</property>
+                          </object>
+                          <packing>
+                            <property name="x">1</property>
+                            <property name="y">346</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="NoiseReductionCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="NoiseReductionauto" translatable="yes">auto</item>
+                              <item id="NoiseReductionoff" translatable="yes">off</item>
+                              <item id="NoiseReductionnormal" translatable="yes">normal</item>
+                              <item id="NoiseReductionmanual" translatable="yes">manual</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">106</property>
+                            <property name="y">336</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="NoiseFilterLevel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">NoiseFilterLevel:</property>
+                          </object>
+                          <packing>
+                            <property name="x">1</property>
+                            <property name="y">380</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="NoiseFilterScale">
+                            <property name="width_request">220</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">NoiseFileterAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">122</property>
+                            <property name="y">381</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="SpatialLevel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">SpatialLevel:</property>
+                          </object>
+                          <packing>
+                            <property name="x">20</property>
+                            <property name="y">403</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="SpatialLevelScale">
+                            <property name="width_request">220</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">SpatialLevelAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">122</property>
+                            <property name="y">403</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="TemporalLevel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">TemporalLevel:</property>
+                          </object>
+                          <packing>
+                            <property name="x">11</property>
+                            <property name="y">427</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="TemporalLevelScale">
+                            <property name="width_request">220</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="adjustment">TemporalLevelAdjustment</property>
+                            <property name="round_digits">1</property>
+                            <property name="digits">0</property>
+                            <property name="value_pos">left</property>
+                          </object>
+                          <packing>
+                            <property name="x">122</property>
+                            <property name="y">427</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator6">
+                            <property name="width_request">361</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">443</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="videoAdjustment">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="opacity">0.98999999999999999</property>
+                            <property name="label" translatable="yes">videoAdjustment:</property>
+                          </object>
+                          <packing>
+                            <property name="x">7</property>
+                            <property name="y">459</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="MirrorEffect">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="opacity">0.98999999999999999</property>
+                            <property name="label" translatable="yes">MirrorEffect:</property>
+                          </object>
+                          <packing>
+                            <property name="x">5</property>
+                            <property name="y">488</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="MirrorCombox">
+                            <property name="width_request">118</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="MirrorOFF" translatable="yes">OFF</item>
+                              <item id="MirrorUp-Down" translatable="yes">Up/Down</item>
+                              <item id="MirrorLeft-Right" translatable="yes">Left/Right</item>
+                              <item id="MirrorCenter" translatable="yes">Center</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">110</property>
+                            <property name="y">480</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="SceneMode">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">SceneMode:</property>
+                          </object>
+                          <packing>
+                            <property name="x">8</property>
+                            <property name="y">526</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="SceneModeCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="SceneModeindoor" translatable="yes">indoor</item>
+                              <item id="SceneModeoutdoor" translatable="yes">outdoor</item>
+                              <item id="SceneModeauto" translatable="yes">auto</item>
+                              <item id="SceneModehdr" translatable="yes">hdr</item>
+                              <item id="SceneModeull" translatable="yes">ull</item>
+                              <item id="SceneModedisable" translatable="yes">disable</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">110</property>
+                            <property name="y">518</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="SensorResolution">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">SensorResolution:</property>
+                          </object>
+                          <packing>
+                            <property name="x">3</property>
+                            <property name="y">562</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="SensorResCombox">
+                            <property name="width_request">103</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="Reso720p" translatable="yes">720p</item>
+                              <item id="Reso1080p" translatable="yes">1080p</item>
+                              <item id="Reso4K" translatable="yes">4K</item>
+                              <item id="Resoauto" translatable="yes">auto</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">142</property>
+                            <property name="y">556</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="CaptureFps">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Fps:</property>
+                          </object>
+                          <packing>
+                            <property name="x">34</property>
+                            <property name="y">602</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="CaptureFpsCombox">
+                            <property name="width_request">113</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="CaptureFps25" translatable="yes">25</item>
+                              <item id="CaptureFps30" translatable="yes">30</item>
+                              <item id="CaptureFps50" translatable="yes">50</item>
+                              <item id="CaptureFps60" translatable="yes">60</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">143</property>
+                            <property name="y">594</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="VideoStandard">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">VideoStandard:</property>
+                          </object>
+                          <packing>
+                            <property name="x">20</property>
+                            <property name="y">639</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="VideoStandardCombox">
+                            <property name="width_request">100</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="VS-50Hz" translatable="yes">PAL</item>
+                              <item id="VS-60Hz" translatable="yes">NTSC</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">143</property>
+                            <property name="y">633</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator7">
+                            <property name="width_request">361</property>
+                            <property name="height_request">1</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">673</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="Others">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Others:</property>
+                          </object>
+                          <packing>
+                            <property name="x">3</property>
+                            <property name="y">977</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="ResetSetting">
+                            <property name="label" translatable="yes">Reset</property>
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">8</property>
+                            <property name="y">1005</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="CameraReboot">
+                            <property name="label" translatable="yes">Restart</property>
+                            <property name="width_request">80</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">271</property>
+                            <property name="y">1006</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="AdvanceLabel">
+                            <property name="width_request">100</property>
+                            <property name="height_request">20</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Advanced:</property>
+                          </object>
+                          <packing>
+                            <property name="x">3</property>
+                            <property name="y">687</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator8">
+                            <property name="width_request">361</property>
+                            <property name="height_request">1</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">723</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="mAdvancedCombox">
+                            <property name="width_request">99</property>
+                            <property name="height_request">30</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <items>
+                              <item id="AdvanceHDR" translatable="yes">HDR</item>
+                              <item id="AdvanceULL" translatable="yes">ULL</item>
+                              <item id="AdvanceHightLight" translatable="yes">HightLight</item>
+                              <item id="AdvanceLowLatency" translatable="yes">LowLatency</item>
+                              <item id="AdvanceNone" translatable="yes">None</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="x">104</property>
+                            <property name="y">681</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator" id="separator16">
+                            <property name="width_request">360</property>
+                            <property name="height_request">5</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="y">965</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkTextView" id="CustomAICText">
+                            <property name="width_request">357</property>
+                            <property name="height_request">175</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="wrap_mode">word-char</property>
+                          </object>
+                          <packing>
+                            <property name="x">2</property>
+                            <property name="y">782</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="CustomAicParam">
+                            <property name="label" translatable="yes">SetCustomAICParam</property>
+                            <property name="width_request">100</property>
+                            <property name="height_request">40</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                          </object>
+                          <packing>
+                            <property name="x">110</property>
+                            <property name="y">734</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="ManualSetting">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">ManualSetting</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="LogPage">
+                <property name="width_request">100</property>
+                <property name="height_request">80</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="CameraDebugLevel">
+                    <property name="width_request">60</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">DebugLevel:</property>
+                  </object>
+                  <packing>
+                    <property name="x">4</property>
+                    <property name="y">15</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkTextView" id="TextLogInfo">
+                    <property name="width_request">345</property>
+                    <property name="height_request">328</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="wrap_mode">word-char</property>
+                  </object>
+                  <packing>
+                    <property name="x">10</property>
+                    <property name="y">388</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="ButtonLogSave">
+                    <property name="label" translatable="yes">Save</property>
+                    <property name="width_request">60</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">271</property>
+                    <property name="y">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSeparator" id="separator5">
+                    <property name="width_request">359</property>
+                    <property name="height_request">5</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">start</property>
+                  </object>
+                  <packing>
+                    <property name="x">2</property>
+                    <property name="y">245</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="Cam0FrameNumLabel">
+                    <property name="width_request">100</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">FrameNum:</property>
+                  </object>
+                  <packing>
+                    <property name="x">10</property>
+                    <property name="y">176</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="FrameNumForCam0">
+                    <property name="width_request">80</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">104</property>
+                    <property name="y">176</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="Cam0LoopLabel">
+                    <property name="width_request">100</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">LoopTime:</property>
+                  </object>
+                  <packing>
+                    <property name="x">9</property>
+                    <property name="y">209</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="LoopTimeForCam0">
+                    <property name="width_request">100</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">104</property>
+                    <property name="y">210</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="Cam0ForDual">
+                    <property name="width_request">79</property>
+                    <property name="height_request">26</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Camera0:</property>
+                  </object>
+                  <packing>
+                    <property name="y">147</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="StartForCam0">
+                    <property name="label" translatable="yes">Start</property>
+                    <property name="width_request">70</property>
+                    <property name="height_request">45</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">277</property>
+                    <property name="y">185</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="Cam1ForDual">
+                    <property name="width_request">79</property>
+                    <property name="height_request">26</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Camera1:</property>
+                  </object>
+                  <packing>
+                    <property name="y">259</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="Cam1FrameNumLabel">
+                    <property name="width_request">100</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">FrameNum:</property>
+                  </object>
+                  <packing>
+                    <property name="x">10</property>
+                    <property name="y">288</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="Cam1LoopLabel">
+                    <property name="width_request">100</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">LoopTime:</property>
+                  </object>
+                  <packing>
+                    <property name="x">9</property>
+                    <property name="y">326</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="FrameNumForCam1">
+                    <property name="width_request">100</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">104</property>
+                    <property name="y">288</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="LoopTimeForCam1">
+                    <property name="width_request">100</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">104</property>
+                    <property name="y">326</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="StartForCam1">
+                    <property name="label" translatable="yes">Start</property>
+                    <property name="width_request">70</property>
+                    <property name="height_request">45</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">277</property>
+                    <property name="y">298</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSeparator" id="separator15">
+                    <property name="width_request">361</property>
+                    <property name="height_request">5</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="x">1</property>
+                    <property name="y">87</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="TestForDual">
+                    <property name="label" translatable="yes">TestDual</property>
+                    <property name="width_request">362</property>
+                    <property name="height_request">25</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">1</property>
+                    <property name="y">106</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSeparator" id="separator17">
+                    <property name="width_request">361</property>
+                    <property name="height_request">5</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="y">379</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="CameraDumpLevel">
+                    <property name="width_request">90</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">DumpLevel:</property>
+                  </object>
+                  <packing>
+                    <property name="y">47</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="DumpLevel">
+                    <property name="width_request">90</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">92</property>
+                    <property name="y">43</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="dumpLevelEg">
+                    <property name="width_request">68</property>
+                    <property name="height_request">20</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Eg:(0~1&lt;20)</property>
+                  </object>
+                  <packing>
+                    <property name="x">264</property>
+                    <property name="y">48</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="DebugLevel">
+                    <property name="width_request">100</property>
+                    <property name="height_request">30</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </object>
+                  <packing>
+                    <property name="x">91</property>
+                    <property name="y">9</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="LabelDebug">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Debug</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="x">1480</property>
+            <property name="y">218</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="separator10">
+            <property name="width_request">375</property>
+            <property name="height_request">10</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="x">1478</property>
+            <property name="y">975</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="separator9">
+            <property name="width_request">378</property>
+            <property name="height_request">10</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="x">1476</property>
+            <property name="y">205</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="StartAll">
+            <property name="label" translatable="yes">StartAll</property>
+            <property name="width_request">80</property>
+            <property name="height_request">32</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">1746</property>
+            <property name="y">46</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="StopAll">
+            <property name="label" translatable="yes">StopAll</property>
+            <property name="width_request">80</property>
+            <property name="height_request">32</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">1746</property>
+            <property name="y">87</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="ClientEnable">
+            <property name="label" translatable="yes">Connect</property>
+            <property name="width_request">80</property>
+            <property name="height_request">32</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">1746</property>
+            <property name="y">9</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="box1">
+            <property name="width_request">1409</property>
+            <property name="height_request">35</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkStatusbar" id="Cam0Status">
+                <property name="width_request">330</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">10</property>
+                <property name="margin_right">10</property>
+                <property name="margin_top">6</property>
+                <property name="margin_bottom">6</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">2</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkStatusbar" id="Cam1Status">
+                <property name="width_request">330</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">10</property>
+                <property name="margin_right">10</property>
+                <property name="margin_top">6</property>
+                <property name="margin_bottom">6</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">2</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkStatusbar" id="Cam2Status">
+                <property name="width_request">330</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">10</property>
+                <property name="margin_right">10</property>
+                <property name="margin_top">6</property>
+                <property name="margin_bottom">6</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">2</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkStatusbar" id="Cam3Status">
+                <property name="width_request">339</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">10</property>
+                <property name="margin_right">10</property>
+                <property name="margin_top">6</property>
+                <property name="margin_bottom">6</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">2</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="x">60</property>
+            <property name="y">986</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkDrawingArea" id="Camera0">
+            <property name="width_request">720</property>
+            <property name="height_request">480</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkDrawingArea" id="Camera1">
+            <property name="width_request">720</property>
+            <property name="height_request">480</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="x">745</property>
+            <property name="y">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkDrawingArea" id="Camera2">
+            <property name="width_request">720</property>
+            <property name="height_request">480</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">492</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkDrawingArea" id="Camera3">
+            <property name="width_request">720</property>
+            <property name="height_request">480</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="x">745</property>
+            <property name="y">492</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="separator11">
+            <property name="width_request">5</property>
+            <property name="height_request">980</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+          </object>
+          <packing>
+            <property name="x">735</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="separator12">
+            <property name="width_request">1475</property>
+            <property name="height_request">5</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="y">485</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="StartButton">
+            <property name="label" translatable="yes">Start</property>
+            <property name="width_request">60</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">1490</property>
+            <property name="y">986</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="PauseButton">
+            <property name="label" translatable="yes">Pause</property>
+            <property name="width_request">66</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="opacity">0.98999999999999999</property>
+          </object>
+          <packing>
+            <property name="x">1554</property>
+            <property name="y">986</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="StopButton">
+            <property name="label" translatable="yes">Stop</property>
+            <property name="width_request">66</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="resize_mode">queue</property>
+          </object>
+          <packing>
+            <property name="x">1625</property>
+            <property name="y">986</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="RecordButton">
+            <property name="label" translatable="yes">Record</property>
+            <property name="width_request">65</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">1698</property>
+            <property name="y">986</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="sourceElement">
+            <property name="width_request">70</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Source:</property>
+          </object>
+          <packing>
+            <property name="x">1478</property>
+            <property name="y">132</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="SourceCombox">
+            <property name="width_request">100</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <items>
+              <item id="icamerasrc" translatable="yes">icamerasrc</item>
+              <item id="videotestsrc" translatable="yes">videotestsrc</item>
+            </items>
+          </object>
+          <packing>
+            <property name="x">1543</property>
+            <property name="y">125</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="SinkElement">
+            <property name="width_request">60</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Sink:</property>
+          </object>
+          <packing>
+            <property name="x">1660</property>
+            <property name="y">132</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="SinkCombox">
+            <property name="width_request">100</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <items>
+              <item id="vaapisink" translatable="yes">vaapisink</item>
+              <item id="xvimagesink" translatable="yes">xvimagesink</item>
+              <item id="fakesink" translatable="yes">fakesink</item>
+              <item id="yamisink" translatable="yes">yamisink</item>
+              <item id="ximagesink" translatable="yes">ximagesink</item>
+              <item id="fpsdisplaysink" translatable="yes">fpsdisplaysink</item>
+            </items>
+          </object>
+          <packing>
+            <property name="x">1710</property>
+            <property name="y">125</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="ConvertElement">
+            <property name="width_request">68</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Convert:</property>
+          </object>
+          <packing>
+            <property name="x">1478</property>
+            <property name="y">169</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="ConvertCombox">
+            <property name="width_request">100</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <items>
+              <item id="videoconvert" translatable="yes">videoconvert</item>
+              <item id="vaapipostproc" translatable="yes">vaapipostproc</item>
+              <item id="yamiscale" translatable="yes">yamiscale</item>
+            </items>
+          </object>
+          <packing>
+            <property name="x">1544</property>
+            <property name="y">167</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToggleButton" id="TestVcButton">
+            <property name="label" translatable="yes">TestVcFunc</property>
+            <property name="width_request">90</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="x">1714</property>
+            <property name="y">171</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -38,9 +38,9 @@
     #pragma comment(lib,"opencv_highgui231d.lib")
     #pragma comment(lib, "opencv_imgproc231d.lib")
 #else
-    #pragma comment(lib,"opencv_core231.lib")
-    #pragma comment(lib,"opencv_highgui231.lib")
-    #pragma comment(lib, "opencv_imgproc231.lib")
+    #pragma comment(lib,"opencv_core241.lib")
+    #pragma comment(lib,"opencv_highgui241.lib")
+    #pragma comment(lib, "opencv_imgproc241.lib")
 #endif
 
 #define MAX_FILE_PATH 512
@@ -608,8 +608,7 @@ void convert_rgb162bgr(uchar *buff, int stride, int w, int h, Mat &dst)
 }
 void convert_jpgtorgb(uchar *buff, int stride, int w, int h, Mat &dst)
 {
-    dst.create(Size(w, h), CV_8UC3);
-
+    dst = imread(RawDumpPath,1);
 
 }
 bool Loadinputimage(const char *imgpath, int ncount, int w, int h, MEDIA_FORMAT format, vector<Mat> &img_array, bool Alignment)
@@ -683,6 +682,10 @@ bool Loadinputimage(const char *imgpath, int ncount, int w, int h, MEDIA_FORMAT 
     case MEDIA_FORMAT_JPG:
     case MEDIA_FORMAT_BMP:
         one_img_size = nDataLen;
+        func = convert_jpgtorgb;
+        stride=0;
+        w=0;
+        h=0;
         break;
     default:
         LOG_ERROR("Unknown format", NULL);

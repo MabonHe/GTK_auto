@@ -48,15 +48,27 @@
   #include <limits.h>
 #endif // SKIP_INCLUDES
 
+
 #ifdef __cplusplus
 
 /////// exchange-add operation for atomic operations on reference counters ///////
-#ifdef __GNUC__
+#if defined __INTEL_COMPILER && !(defined WIN32 || defined _WIN32)   // atomic increment on the linux version of the Intel(tm) compiler
+  #define CV_XADD(addr,delta) _InterlockedExchangeAdd(const_cast<void*>(reinterpret_cast<volatile void*>(addr)), delta)
+#elif defined __GNUC__
 
-  #if __GNUC__*10 + __GNUC_MINOR__ >= 42
+  #if defined __clang__ && __clang_major__ >= 3 && !defined __ANDROID__ && !defined __EMSCRIPTEN__  && !defined(__CUDACC__)
+    #ifdef __ATOMIC_SEQ_CST
+        #define CV_XADD(addr, delta) __c11_atomic_fetch_add((_Atomic(int)*)(addr), (delta), __ATOMIC_SEQ_CST)
+    #else
+        #define CV_XADD(addr, delta) __atomic_fetch_add((_Atomic(int)*)(addr), (delta), 5)
+    #endif
+  #elif __GNUC__*10 + __GNUC_MINOR__ >= 42
 
-    #if !defined WIN32 && (defined __i486__ || defined __i586__ || \
-        defined __i686__ || defined __MMX__ || defined __SSE__  || defined __ppc__)
+    #if !(defined WIN32 || defined _WIN32) && (defined __i486__ || defined __i586__ || \
+        defined __i686__ || defined __MMX__ || defined __SSE__  || defined __ppc__) || \
+        (defined __GNUC__ && defined _STLPORT_MAJOR) || \
+        defined __EMSCRIPTEN__
+
       #define CV_XADD __sync_fetch_and_add
     #else
       #include <ext/atomicity.h>
@@ -72,17 +84,21 @@
     #endif
   #endif
 
-#elif defined WIN32 || defined _WIN32
-  #include <intrin.h>
-  #define CV_XADD(addr,delta) _InterlockedExchangeAdd((long volatile*)(addr), (delta))
+#elif defined WIN32 || defined _WIN32 || defined WINCE
+  namespace cv { CV_EXPORTS int _interlockedExchangeAdd(int* addr, int delta); }
+  #define CV_XADD cv::_interlockedExchangeAdd
+
 #else
-
-  template<typename _Tp> static inline _Tp CV_XADD(_Tp* addr, _Tp delta)
+  static inline int CV_XADD(int* addr, int delta)
   { int tmp = *addr; *addr += delta; return tmp; }
-
 #endif
 
 #include <limits>
+
+#ifdef _MSC_VER
+# pragma warning(push)
+# pragma warning(disable:4127) //conditional expression is constant
+#endif
 
 namespace cv
 {
@@ -176,6 +192,13 @@ template<> inline int saturate_cast<int>(double v) { return cvRound(v); }
 template<> inline unsigned saturate_cast<unsigned>(float v){ return cvRound(v); }
 template<> inline unsigned saturate_cast<unsigned>(double v) { return cvRound(v); }
 
+inline int fast_abs(uchar v) { return v; }
+inline int fast_abs(schar v) { return std::abs((int)v); }
+inline int fast_abs(ushort v) { return v; }
+inline int fast_abs(short v) { return std::abs((int)v); }
+inline int fast_abs(int v) { return std::abs(v); }
+inline float fast_abs(float v) { return std::abs(v); }
+inline double fast_abs(double v) { return std::abs(v); }
 
 //////////////////////////////// Matx /////////////////////////////////
 
@@ -342,15 +365,16 @@ template<typename _Tp, int m, int n> inline double Matx<_Tp, m, n>::ddot(const M
 }
 
 
-
+/** @cond IGNORED */
 template<typename _Tp, int m, int n> inline
-Matx<_Tp,m,n> Matx<_Tp,m,n>::diag(const Matx<_Tp,MIN(m,n),1>& d)
+Matx<_Tp,m,n> Matx<_Tp,m,n>::diag(const typename Matx<_Tp,m,n>::diag_type& d)
 {
     Matx<_Tp,m,n> M;
     for(int i = 0; i < MIN(m,n); i++)
         M(i,i) = d(i, 0);
     return M;
 }
+/** @endcond */
 
 template<typename _Tp, int m, int n> inline
 Matx<_Tp,m,n> Matx<_Tp,m,n>::randu(_Tp a, _Tp b)
@@ -414,13 +438,13 @@ Matx<_Tp, m, 1> Matx<_Tp, m, n>::col(int j) const
     CV_DbgAssert((unsigned)j < (unsigned)n);
     Matx<_Tp, m, 1> v;
     for( int i = 0; i < m; i++ )
-        v[i] = val[i*n + j];
+        v.val[i] = val[i*n + j];
     return v;
 }
 
 
 template<typename _Tp, int m, int n> inline
-Matx<_Tp, MIN(m,n), 1> Matx<_Tp, m, n>::diag() const
+typename Matx<_Tp, m, n>::diag_type Matx<_Tp, m, n>::diag() const
 {
     diag_type d;
     for( int i = 0; i < MIN(m, n); i++ )
@@ -622,6 +646,14 @@ Matx<_Tp, m, n> operator * (const Matx<_Tp, m, l>& a, const Matx<_Tp, l, n>& b)
 }
 
 
+template<typename _Tp, int m, int n> static inline
+Vec<_Tp, m> operator * (const Matx<_Tp, m, n>& a, const Vec<_Tp, n>& b)
+{
+    Matx<_Tp, m, 1> c(a, b, Matx_MatMulOp());
+    return reinterpret_cast<const Vec<_Tp, m>&>(c);
+}
+
+
 template<typename _Tp> static inline
 Point_<_Tp> operator * (const Matx<_Tp, 2, 2>& a, const Point_<_Tp>& b)
 {
@@ -656,7 +688,16 @@ Matx<_Tp, 4, 1> operator * (const Matx<_Tp, 4, 4>& a, const Point3_<_Tp>& b)
 template<typename _Tp> static inline
 Scalar operator * (const Matx<_Tp, 4, 4>& a, const Scalar& b)
 {
-    return Scalar(a*Matx<_Tp, 4, 1>(b[0],b[1],b[2],b[3]));
+    Matx<double, 4, 1> c(Matx<double, 4, 4>(a), b, Matx_MatMulOp());
+    return static_cast<const Scalar&>(c);
+}
+
+
+static inline
+Scalar operator * (const Matx<double, 4, 4>& a, const Scalar& b)
+{
+    Matx<double, 4, 1> c(a, b, Matx_MatMulOp());
+    return static_cast<const Scalar&>(c);
 }
 
 
@@ -673,22 +714,22 @@ CV_EXPORTS bool Cholesky(float* A, size_t astep, int m, float* b, size_t bstep, 
 CV_EXPORTS bool Cholesky(double* A, size_t astep, int m, double* b, size_t bstep, int n);
 
 
-template<typename _Tp, int m> struct CV_EXPORTS Matx_DetOp
+template<typename _Tp, int m> struct Matx_DetOp
 {
     double operator ()(const Matx<_Tp, m, m>& a) const
     {
         Matx<_Tp, m, m> temp = a;
-        double p = LU(temp.val, m, m, 0, 0, 0);
+        double p = LU(temp.val, m*sizeof(_Tp), m, 0, 0, 0);
         if( p == 0 )
             return p;
         for( int i = 0; i < m; i++ )
             p *= temp(i, i);
-        return p;
+        return 1./p;
     }
 };
 
 
-template<typename _Tp> struct CV_EXPORTS Matx_DetOp<_Tp, 1>
+template<typename _Tp> struct Matx_DetOp<_Tp, 1>
 {
     double operator ()(const Matx<_Tp, 1, 1>& a) const
     {
@@ -697,7 +738,7 @@ template<typename _Tp> struct CV_EXPORTS Matx_DetOp<_Tp, 1>
 };
 
 
-template<typename _Tp> struct CV_EXPORTS Matx_DetOp<_Tp, 2>
+template<typename _Tp> struct Matx_DetOp<_Tp, 2>
 {
     double operator ()(const Matx<_Tp, 2, 2>& a) const
     {
@@ -706,7 +747,7 @@ template<typename _Tp> struct CV_EXPORTS Matx_DetOp<_Tp, 2>
 };
 
 
-template<typename _Tp> struct CV_EXPORTS Matx_DetOp<_Tp, 3>
+template<typename _Tp> struct Matx_DetOp<_Tp, 3>
 {
     double operator ()(const Matx<_Tp, 3, 3>& a) const
     {
@@ -740,7 +781,7 @@ Matx<_Tp, n, m> Matx<_Tp, m, n>::t() const
 }
 
 
-template<typename _Tp, int m> struct CV_EXPORTS Matx_FastInvOp
+template<typename _Tp, int m> struct Matx_FastInvOp
 {
     bool operator()(const Matx<_Tp, m, m>& a, Matx<_Tp, m, m>& b, int method) const
     {
@@ -758,7 +799,7 @@ template<typename _Tp, int m> struct CV_EXPORTS Matx_FastInvOp
 };
 
 
-template<typename _Tp> struct CV_EXPORTS Matx_FastInvOp<_Tp, 2>
+template<typename _Tp> struct Matx_FastInvOp<_Tp, 2>
 {
     bool operator()(const Matx<_Tp, 2, 2>& a, Matx<_Tp, 2, 2>& b, int) const
     {
@@ -775,11 +816,11 @@ template<typename _Tp> struct CV_EXPORTS Matx_FastInvOp<_Tp, 2>
 };
 
 
-template<typename _Tp> struct CV_EXPORTS Matx_FastInvOp<_Tp, 3>
+template<typename _Tp> struct Matx_FastInvOp<_Tp, 3>
 {
     bool operator()(const Matx<_Tp, 3, 3>& a, Matx<_Tp, 3, 3>& b, int) const
     {
-        _Tp d = determinant(a);
+        _Tp d = (_Tp)determinant(a);
         if( d == 0 )
             return false;
         d = 1/d;
@@ -809,13 +850,13 @@ Matx<_Tp, n, m> Matx<_Tp, m, n>::inv(int method) const
     else
     {
         Mat A(*this, false), B(b, false);
-        ok = invert(A, B, method);
+        ok = (invert(A, B, method) != 0);
     }
     return ok ? b : Matx<_Tp, n, m>::zeros();
 }
 
 
-template<typename _Tp, int m, int n> struct CV_EXPORTS Matx_FastSolveOp
+template<typename _Tp, int m, int n> struct Matx_FastSolveOp
 {
     bool operator()(const Matx<_Tp, m, m>& a, const Matx<_Tp, m, n>& b,
                     Matx<_Tp, m, n>& x, int method) const
@@ -830,10 +871,10 @@ template<typename _Tp, int m, int n> struct CV_EXPORTS Matx_FastSolveOp
 };
 
 
-template<typename _Tp> struct CV_EXPORTS Matx_FastSolveOp<_Tp, 2, 1>
+template<typename _Tp> struct Matx_FastSolveOp<_Tp, 2, 1>
 {
     bool operator()(const Matx<_Tp, 2, 2>& a, const Matx<_Tp, 2, 1>& b,
-                    Matx<_Tp, 2, 1>& x, int method) const
+                    Matx<_Tp, 2, 1>& x, int) const
     {
         _Tp d = determinant(a);
         if( d == 0 )
@@ -846,12 +887,12 @@ template<typename _Tp> struct CV_EXPORTS Matx_FastSolveOp<_Tp, 2, 1>
 };
 
 
-template<typename _Tp> struct CV_EXPORTS Matx_FastSolveOp<_Tp, 3, 1>
+template<typename _Tp> struct Matx_FastSolveOp<_Tp, 3, 1>
 {
     bool operator()(const Matx<_Tp, 3, 3>& a, const Matx<_Tp, 3, 1>& b,
-                    Matx<_Tp, 3, 1>& x, int method) const
+                    Matx<_Tp, 3, 1>& x, int) const
     {
-        _Tp d = determinant(a);
+        _Tp d = (_Tp)determinant(a);
         if( d == 0 )
             return false;
         d = 1/d;
@@ -887,38 +928,166 @@ Matx<_Tp, n, l> Matx<_Tp, m, n>::solve(const Matx<_Tp, m, l>& rhs, int method) c
     return ok ? x : Matx<_Tp, n, l>::zeros();
 }
 
+template<typename _Tp, int m, int n> inline
+Vec<_Tp, n> Matx<_Tp, m, n>::solve(const Vec<_Tp, m>& rhs, int method) const
+{
+    Matx<_Tp, n, 1> x = solve(reinterpret_cast<const Matx<_Tp, m, 1>&>(rhs), method);
+    return reinterpret_cast<Vec<_Tp, n>&>(x);
+}
+
+template<typename _Tp, typename _AccTp> static inline
+_AccTp normL2Sqr(const _Tp* a, int n)
+{
+    _AccTp s = 0;
+    int i=0;
+ #if CV_ENABLE_UNROLLED
+    for( ; i <= n - 4; i += 4 )
+    {
+        _AccTp v0 = a[i], v1 = a[i+1], v2 = a[i+2], v3 = a[i+3];
+        s += v0*v0 + v1*v1 + v2*v2 + v3*v3;
+    }
+#endif
+    for( ; i < n; i++ )
+    {
+        _AccTp v = a[i];
+        s += v*v;
+    }
+    return s;
+}
+
+
+template<typename _Tp, typename _AccTp> static inline
+_AccTp normL1(const _Tp* a, int n)
+{
+    _AccTp s = 0;
+    int i = 0;
+#if CV_ENABLE_UNROLLED
+    for(; i <= n - 4; i += 4 )
+    {
+        s += (_AccTp)fast_abs(a[i]) + (_AccTp)fast_abs(a[i+1]) +
+            (_AccTp)fast_abs(a[i+2]) + (_AccTp)fast_abs(a[i+3]);
+    }
+#endif
+    for( ; i < n; i++ )
+        s += fast_abs(a[i]);
+    return s;
+}
+
+
+template<typename _Tp, typename _AccTp> static inline
+_AccTp normInf(const _Tp* a, int n)
+{
+    _AccTp s = 0;
+    for( int i = 0; i < n; i++ )
+        s = std::max(s, (_AccTp)fast_abs(a[i]));
+    return s;
+}
+
+
+template<typename _Tp, typename _AccTp> static inline
+_AccTp normL2Sqr(const _Tp* a, const _Tp* b, int n)
+{
+    _AccTp s = 0;
+    int i= 0;
+#if CV_ENABLE_UNROLLED
+    for(; i <= n - 4; i += 4 )
+    {
+        _AccTp v0 = _AccTp(a[i] - b[i]), v1 = _AccTp(a[i+1] - b[i+1]), v2 = _AccTp(a[i+2] - b[i+2]), v3 = _AccTp(a[i+3] - b[i+3]);
+        s += v0*v0 + v1*v1 + v2*v2 + v3*v3;
+    }
+#endif
+    for( ; i < n; i++ )
+    {
+        _AccTp v = _AccTp(a[i] - b[i]);
+        s += v*v;
+    }
+    return s;
+}
+
+CV_EXPORTS float normL2Sqr_(const float* a, const float* b, int n);
+CV_EXPORTS float normL1_(const float* a, const float* b, int n);
+CV_EXPORTS int normL1_(const uchar* a, const uchar* b, int n);
+CV_EXPORTS int normHamming(const uchar* a, const uchar* b, int n);
+CV_EXPORTS int normHamming(const uchar* a, const uchar* b, int n, int cellSize);
+
+template<> inline float normL2Sqr(const float* a, const float* b, int n)
+{
+    if( n >= 8 )
+        return normL2Sqr_(a, b, n);
+    float s = 0;
+    for( int i = 0; i < n; i++ )
+    {
+        float v = a[i] - b[i];
+        s += v*v;
+    }
+    return s;
+}
+
+
+template<typename _Tp, typename _AccTp> static inline
+_AccTp normL1(const _Tp* a, const _Tp* b, int n)
+{
+    _AccTp s = 0;
+    int i= 0;
+#if CV_ENABLE_UNROLLED
+    for(; i <= n - 4; i += 4 )
+    {
+        _AccTp v0 = _AccTp(a[i] - b[i]), v1 = _AccTp(a[i+1] - b[i+1]), v2 = _AccTp(a[i+2] - b[i+2]), v3 = _AccTp(a[i+3] - b[i+3]);
+        s += std::abs(v0) + std::abs(v1) + std::abs(v2) + std::abs(v3);
+    }
+#endif
+    for( ; i < n; i++ )
+    {
+        _AccTp v = _AccTp(a[i] - b[i]);
+        s += std::abs(v);
+    }
+    return s;
+}
+
+template<> inline float normL1(const float* a, const float* b, int n)
+{
+    if( n >= 8 )
+        return normL1_(a, b, n);
+    float s = 0;
+    for( int i = 0; i < n; i++ )
+    {
+        float v = a[i] - b[i];
+        s += std::abs(v);
+    }
+    return s;
+}
+
+template<> inline int normL1(const uchar* a, const uchar* b, int n)
+{
+    return normL1_(a, b, n);
+}
+
+template<typename _Tp, typename _AccTp> static inline
+_AccTp normInf(const _Tp* a, const _Tp* b, int n)
+{
+    _AccTp s = 0;
+    for( int i = 0; i < n; i++ )
+    {
+        _AccTp v0 = a[i] - b[i];
+        s = std::max(s, std::abs(v0));
+    }
+    return s;
+}
+
 
 template<typename _Tp, int m, int n> static inline
 double norm(const Matx<_Tp, m, n>& M)
 {
-    double s = 0;
-    for( int i = 0; i < m*n; i++ )
-        s += (double)M.val[i]*M.val[i];
-    return std::sqrt(s);
+    return std::sqrt(normL2Sqr<_Tp, double>(M.val, m*n));
 }
 
 
 template<typename _Tp, int m, int n> static inline
 double norm(const Matx<_Tp, m, n>& M, int normType)
 {
-    if( normType == NORM_INF )
-    {
-        _Tp s = 0;
-        for( int i = 0; i < m*n; i++ )
-            s = std::max(s, std::abs(M.val[i]));
-        return s;
-    }
-
-    if( normType == NORM_L1 )
-    {
-        _Tp s = 0;
-        for( int i = 0; i < m*n; i++ )
-            s += std::abs(M.val[i]);
-        return s;
-    }
-
-    CV_DbgAssert( normType == NORM_L2 );
-    return norm(M);
+    return normType == NORM_INF ? (double)normInf<_Tp, typename DataType<_Tp>::work_type>(M.val, m*n) :
+        normType == NORM_L1 ? (double)normL1<_Tp, typename DataType<_Tp>::work_type>(M.val, m*n) :
+        std::sqrt((double)normL2Sqr<_Tp, typename DataType<_Tp>::work_type>(M.val, m*n));
 }
 
 
@@ -1053,7 +1222,37 @@ template<typename _Tp, int cn> inline Vec<_Tp, cn> Vec<_Tp, cn>::mul(const Vec<_
     return w;
 }
 
-template<typename _Tp, int cn> inline Vec<_Tp, cn> Vec<_Tp, cn>::cross(const Vec<_Tp, cn>& v) const
+template<typename _Tp> Vec<_Tp, 2> conjugate(const Vec<_Tp, 2>& v)
+{
+    return Vec<_Tp, 2>(v[0], -v[1]);
+}
+
+template<typename _Tp> Vec<_Tp, 4> conjugate(const Vec<_Tp, 4>& v)
+{
+    return Vec<_Tp, 4>(v[0], -v[1], -v[2], -v[3]);
+}
+
+template<> inline Vec<float, 2> Vec<float, 2>::conj() const
+{
+    return conjugate(*this);
+}
+
+template<> inline Vec<double, 2> Vec<double, 2>::conj() const
+{
+    return conjugate(*this);
+}
+
+template<> inline Vec<float, 4> Vec<float, 4>::conj() const
+{
+    return conjugate(*this);
+}
+
+template<> inline Vec<double, 4> Vec<double, 4>::conj() const
+{
+    return conjugate(*this);
+}
+
+template<typename _Tp, int cn> inline Vec<_Tp, cn> Vec<_Tp, cn>::cross(const Vec<_Tp, cn>&) const
 {
     CV_Error(CV_StsError, "for arbitrary-size vector there is no cross-product defined");
     return Vec<_Tp, cn>();
@@ -1152,6 +1351,32 @@ Vec<_Tp, cn>& operator *= (Vec<_Tp, cn>& a, double alpha)
     return a;
 }
 
+template<typename _Tp, int cn> static inline
+Vec<_Tp, cn>& operator /= (Vec<_Tp, cn>& a, int alpha)
+{
+    double ialpha = 1./alpha;
+    for( int i = 0; i < cn; i++ )
+        a[i] = saturate_cast<_Tp>(a[i]*ialpha);
+    return a;
+}
+
+template<typename _Tp, int cn> static inline
+Vec<_Tp, cn>& operator /= (Vec<_Tp, cn>& a, float alpha)
+{
+    float ialpha = 1.f/alpha;
+    for( int i = 0; i < cn; i++ )
+        a[i] = saturate_cast<_Tp>(a[i]*ialpha);
+    return a;
+}
+
+template<typename _Tp, int cn> static inline
+Vec<_Tp, cn>& operator /= (Vec<_Tp, cn>& a, double alpha)
+{
+    double ialpha = 1./alpha;
+    for( int i = 0; i < cn; i++ )
+        a[i] = saturate_cast<_Tp>(a[i]*ialpha);
+    return a;
+}
 
 template<typename _Tp, int cn> static inline Vec<_Tp, cn>
 operator * (const Vec<_Tp, cn>& a, int alpha)
@@ -1190,11 +1415,43 @@ operator * (double alpha, const Vec<_Tp, cn>& a)
 }
 
 template<typename _Tp, int cn> static inline Vec<_Tp, cn>
+operator / (const Vec<_Tp, cn>& a, int alpha)
+{
+    return Vec<_Tp, cn>(a, 1./alpha, Matx_ScaleOp());
+}
+
+template<typename _Tp, int cn> static inline Vec<_Tp, cn>
+operator / (const Vec<_Tp, cn>& a, float alpha)
+{
+    return Vec<_Tp, cn>(a, 1.f/alpha, Matx_ScaleOp());
+}
+
+template<typename _Tp, int cn> static inline Vec<_Tp, cn>
+operator / (const Vec<_Tp, cn>& a, double alpha)
+{
+    return Vec<_Tp, cn>(a, 1./alpha, Matx_ScaleOp());
+}
+
+template<typename _Tp, int cn> static inline Vec<_Tp, cn>
 operator - (const Vec<_Tp, cn>& a)
 {
     Vec<_Tp,cn> t;
     for( int i = 0; i < cn; i++ ) t.val[i] = saturate_cast<_Tp>(-a.val[i]);
     return t;
+}
+
+template<typename _Tp> inline Vec<_Tp, 4> operator * (const Vec<_Tp, 4>& v1, const Vec<_Tp, 4>& v2)
+{
+    return Vec<_Tp, 4>(saturate_cast<_Tp>(v1[0]*v2[0] - v1[1]*v2[1] - v1[2]*v2[2] - v1[3]*v2[3]),
+                       saturate_cast<_Tp>(v1[0]*v2[1] + v1[1]*v2[0] + v1[2]*v2[3] - v1[3]*v2[2]),
+                       saturate_cast<_Tp>(v1[0]*v2[2] - v1[1]*v2[3] + v1[2]*v2[0] + v1[3]*v2[1]),
+                       saturate_cast<_Tp>(v1[0]*v2[3] + v1[1]*v2[2] - v1[2]*v2[1] + v1[3]*v2[0]));
+}
+
+template<typename _Tp> inline Vec<_Tp, 4>& operator *= (Vec<_Tp, 4>& v1, const Vec<_Tp, 4>& v2)
+{
+    v1 = v1 * v2;
+    return v1;
 }
 
 template<> inline Vec<float, 3> Vec<float, 3>::cross(const Vec<float, 3>& v) const
@@ -1211,34 +1468,11 @@ template<> inline Vec<double, 3> Vec<double, 3>::cross(const Vec<double, 3>& v) 
                      val[0]*v.val[1] - val[1]*v.val[0]);
 }
 
-template<typename T1, typename T2> static inline
-Vec<T1, 2>& operator += (Vec<T1, 2>& a, const Vec<T2, 2>& b)
+template<typename _Tp, int cn> inline Vec<_Tp, cn> normalize(const Vec<_Tp, cn>& v)
 {
-    a[0] = saturate_cast<T1>(a[0] + b[0]);
-    a[1] = saturate_cast<T1>(a[1] + b[1]);
-    return a;
+    double nv = norm(v);
+    return v * (nv ? 1./nv : 0.);
 }
-
-template<typename T1, typename T2> static inline
-Vec<T1, 3>& operator += (Vec<T1, 3>& a, const Vec<T2, 3>& b)
-{
-    a[0] = saturate_cast<T1>(a[0] + b[0]);
-    a[1] = saturate_cast<T1>(a[1] + b[1]);
-    a[2] = saturate_cast<T1>(a[2] + b[2]);
-    return a;
-}
-
-
-template<typename T1, typename T2> static inline
-Vec<T1, 4>& operator += (Vec<T1, 4>& a, const Vec<T2, 4>& b)
-{
-    a[0] = saturate_cast<T1>(a[0] + b[0]);
-    a[1] = saturate_cast<T1>(a[1] + b[1]);
-    a[2] = saturate_cast<T1>(a[2] + b[2]);
-    a[3] = saturate_cast<T1>(a[3] + b[3]);
-    return a;
-}
-
 
 template<typename _Tp, typename _T2, int cn> static inline
 VecCommaInitializer<_Tp, cn> operator << (const Vec<_Tp, cn>& vec, _T2 val)
@@ -1408,6 +1642,9 @@ template<typename _Tp> inline _Tp Point_<_Tp>::dot(const Point_& pt) const
 { return saturate_cast<_Tp>(x*pt.x + y*pt.y); }
 template<typename _Tp> inline double Point_<_Tp>::ddot(const Point_& pt) const
 { return (double)x*pt.x + (double)y*pt.y; }
+
+template<typename _Tp> inline double Point_<_Tp>::cross(const Point_& pt) const
+{ return (double)x*pt.y - (double)y*pt.x; }
 
 template<typename _Tp> static inline Point_<_Tp>&
 operator += (Point_<_Tp>& a, const Point_<_Tp>& b)
@@ -1894,8 +2131,8 @@ operator * (const Scalar_<_Tp>& a, const Scalar_<_Tp>& b)
 {
     return Scalar_<_Tp>(saturate_cast<_Tp>(a[0]*b[0] - a[1]*b[1] - a[2]*b[2] - a[3]*b[3]),
                         saturate_cast<_Tp>(a[0]*b[1] + a[1]*b[0] + a[2]*b[3] - a[3]*b[2]),
-                        saturate_cast<_Tp>(a[0]*b[2] - a[1]*b[3] + a[2]*b[0] - a[3]*b[1]),
-                        saturate_cast<_Tp>(a[0]*b[3] + a[1]*b[2] - a[2]*b[1] - a[3]*b[0]));
+                        saturate_cast<_Tp>(a[0]*b[2] - a[1]*b[3] + a[2]*b[0] + a[3]*b[1]),
+                        saturate_cast<_Tp>(a[0]*b[3] + a[1]*b[2] - a[2]*b[1] + a[3]*b[0]));
 }
 
 template<typename _Tp> static inline Scalar_<_Tp>&
@@ -2031,7 +2268,7 @@ inline Range::operator CvSlice() const
 //   1) it can be created on top of user-allocated data w/o copying it
 //   2) vector b = a means copying the header,
 //      not the underlying data (use clone() to make a deep copy)
-template <typename _Tp> class CV_EXPORTS Vector
+template <typename _Tp> class Vector
 {
 public:
     typedef _Tp value_type;
@@ -2040,7 +2277,7 @@ public:
     typedef _Tp& reference;
     typedef const _Tp& const_reference;
 
-    struct CV_EXPORTS Hdr
+    struct Hdr
     {
         Hdr() : data(0), datastart(0), refcount(0), size(0), capacity(0) {};
         _Tp* data;
@@ -2065,7 +2302,7 @@ public:
     { set((_Tp*)&vec.val[0], n, true); }
 
     Vector(const std::vector<_Tp>& vec, bool _copyData=false)
-    { set((_Tp*)&vec[0], vec.size(), _copyData); }
+    { set(!vec.empty() ? (_Tp*)&vec[0] : 0, vec.size(), _copyData); }
 
     Vector(const Vector& d) { *this = d; }
 
@@ -2229,16 +2466,14 @@ template<typename _Tp> inline typename DataType<_Tp>::work_type
 dot(const Vector<_Tp>& v1, const Vector<_Tp>& v2)
 {
     typedef typename DataType<_Tp>::work_type _Tw;
-    size_t i, n = v1.size();
+    size_t i = 0, n = v1.size();
     assert(v1.size() == v2.size());
 
     _Tw s = 0;
     const _Tp *ptr1 = &v1[0], *ptr2 = &v2[0];
-    for( i = 0; i <= n - 4; i += 4 )
-        s += (_Tw)ptr1[i]*ptr2[i] + (_Tw)ptr1[i+1]*ptr2[i+1] +
-            (_Tw)ptr1[i+2]*ptr2[i+2] + (_Tw)ptr1[i+3]*ptr2[i+3];
     for( ; i < n; i++ )
         s += (_Tw)ptr1[i]*ptr2[i];
+
     return s;
 }
 
@@ -2266,7 +2501,7 @@ inline RNG::operator double()
     unsigned t = next();
     return (((uint64)t << 32) | next())*5.4210108624275221700372640043497e-20;
 }
-inline int RNG::uniform(int a, int b) { return a == b ? a : next()%(b - a) + a; }
+inline int RNG::uniform(int a, int b) { return a == b ? a : (int)(next()%(b - a) + a); }
 inline float RNG::uniform(float a, float b) { return ((float)*this)*(b - a) + a; }
 inline double RNG::uniform(double a, double b) { return ((double)*this)*(b - a) + a; }
 
@@ -2382,21 +2617,24 @@ template<typename _Tp> inline void Ptr<_Tp>::delete_obj()
 
 template<typename _Tp> inline Ptr<_Tp>::~Ptr() { release(); }
 
-template<typename _Tp> inline Ptr<_Tp>::Ptr(const Ptr<_Tp>& ptr)
+template<typename _Tp> inline Ptr<_Tp>::Ptr(const Ptr<_Tp>& _ptr)
 {
-    obj = ptr.obj;
-    refcount = ptr.refcount;
+    obj = _ptr.obj;
+    refcount = _ptr.refcount;
     addref();
 }
 
-template<typename _Tp> inline Ptr<_Tp>& Ptr<_Tp>::operator = (const Ptr<_Tp>& ptr)
+template<typename _Tp> inline Ptr<_Tp>& Ptr<_Tp>::operator = (const Ptr<_Tp>& _ptr)
 {
-    int* _refcount = ptr.refcount;
-    if( _refcount )
-        CV_XADD(_refcount, 1);
-    release();
-    obj = ptr.obj;
-    refcount = _refcount;
+    if (this != &_ptr)
+    {
+      int* _refcount = _ptr.refcount;
+      if( _refcount )
+          CV_XADD(_refcount, 1);
+      release();
+      obj = _ptr.obj;
+      refcount = _refcount;
+    }
     return *this;
 }
 
@@ -2407,6 +2645,123 @@ template<typename _Tp> inline Ptr<_Tp>::operator _Tp* () { return obj; }
 template<typename _Tp> inline Ptr<_Tp>::operator const _Tp*() const { return obj; }
 
 template<typename _Tp> inline bool Ptr<_Tp>::empty() const { return obj == 0; }
+
+template<typename _Tp> template<typename _Tp2> Ptr<_Tp>::Ptr(const Ptr<_Tp2>& p)
+    : obj(0), refcount(0)
+{
+    if (p.empty())
+        return;
+
+    _Tp* p_casted = dynamic_cast<_Tp*>(p.obj);
+    if (!p_casted)
+        return;
+
+    obj = p_casted;
+    refcount = p.refcount;
+    addref();
+}
+
+template<typename _Tp> template<typename _Tp2> inline Ptr<_Tp2> Ptr<_Tp>::ptr()
+{
+    Ptr<_Tp2> p;
+    if( !obj )
+        return p;
+
+    _Tp2* obj_casted = dynamic_cast<_Tp2*>(obj);
+    if (!obj_casted)
+        return p;
+
+    if( refcount )
+        CV_XADD(refcount, 1);
+
+    p.obj = obj_casted;
+    p.refcount = refcount;
+    return p;
+}
+
+template<typename _Tp> template<typename _Tp2> inline const Ptr<_Tp2> Ptr<_Tp>::ptr() const
+{
+    Ptr<_Tp2> p;
+    if( !obj )
+        return p;
+
+    _Tp2* obj_casted = dynamic_cast<_Tp2*>(obj);
+    if (!obj_casted)
+        return p;
+
+    if( refcount )
+        CV_XADD(refcount, 1);
+
+    p.obj = obj_casted;
+    p.refcount = refcount;
+    return p;
+}
+
+template<typename T>
+Ptr<T> makePtr()
+{
+    return Ptr<T>(new T());
+}
+
+template<typename T, typename A1>
+Ptr<T> makePtr(const A1& a1)
+{
+    return Ptr<T>(new T(a1));
+}
+
+template<typename T, typename A1, typename A2>
+Ptr<T> makePtr(const A1& a1, const A2& a2)
+{
+    return Ptr<T>(new T(a1, a2));
+}
+
+template<typename T, typename A1, typename A2, typename A3>
+Ptr<T> makePtr(const A1& a1, const A2& a2, const A3& a3)
+{
+    return Ptr<T>(new T(a1, a2, a3));
+}
+
+template<typename T, typename A1, typename A2, typename A3, typename A4>
+Ptr<T> makePtr(const A1& a1, const A2& a2, const A3& a3, const A4& a4)
+{
+    return Ptr<T>(new T(a1, a2, a3, a4));
+}
+
+template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5>
+Ptr<T> makePtr(const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5)
+{
+    return Ptr<T>(new T(a1, a2, a3, a4, a5));
+}
+
+template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
+Ptr<T> makePtr(const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6)
+{
+    return Ptr<T>(new T(a1, a2, a3, a4, a5, a6));
+}
+
+template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
+Ptr<T> makePtr(const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7)
+{
+    return Ptr<T>(new T(a1, a2, a3, a4, a5, a6, a7));
+}
+
+template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
+Ptr<T> makePtr(const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8)
+{
+    return Ptr<T>(new T(a1, a2, a3, a4, a5, a6, a7, a8));
+}
+
+template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9>
+Ptr<T> makePtr(const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9)
+{
+    return Ptr<T>(new T(a1, a2, a3, a4, a5, a6, a7, a8, a9));
+}
+
+template<typename T, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9, typename A10>
+Ptr<T> makePtr(const A1& a1, const A2& a2, const A3& a3, const A4& a4, const A5& a5, const A6& a6, const A7& a7, const A8& a8, const A9& a9, const A10& a10)
+{
+    return Ptr<T>(new T(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10));
+}
 
 //// specializied implementations of Ptr::delete_obj() for classic OpenCV types
 
@@ -2575,7 +2930,7 @@ inline void write(FileStorage& fs, const string& name, const Range& r )
     write(fs, r.end);
 }
 
-template<typename _Tp, int numflag> class CV_EXPORTS VecWriterProxy
+template<typename _Tp, int numflag> class VecWriterProxy
 {
 public:
     VecWriterProxy( FileStorage* _fs ) : fs(_fs) {}
@@ -2588,7 +2943,7 @@ public:
     FileStorage* fs;
 };
 
-template<typename _Tp> class CV_EXPORTS VecWriterProxy<_Tp,1>
+template<typename _Tp> class VecWriterProxy<_Tp,1>
 {
 public:
     VecWriterProxy( FileStorage* _fs ) : fs(_fs) {}
@@ -2596,11 +2951,10 @@ public:
     {
         int _fmt = DataType<_Tp>::fmt;
         char fmt[] = { (char)((_fmt>>8)+'1'), (char)_fmt, '\0' };
-        fs->writeRaw( string(fmt), (uchar*)&vec[0], vec.size()*sizeof(_Tp) );
+        fs->writeRaw( string(fmt), !vec.empty() ? (uchar*)&vec[0] : 0, vec.size()*sizeof(_Tp) );
     }
     FileStorage* fs;
 };
-
 
 template<typename _Tp> static inline void write( FileStorage& fs, const vector<_Tp>& vec )
 {
@@ -2608,12 +2962,11 @@ template<typename _Tp> static inline void write( FileStorage& fs, const vector<_
     w(vec);
 }
 
-template<typename _Tp> static inline FileStorage&
-operator << ( FileStorage& fs, const vector<_Tp>& vec )
+template<typename _Tp> static inline void write( FileStorage& fs, const string& name,
+                                                const vector<_Tp>& vec )
 {
-    VecWriterProxy<_Tp, DataType<_Tp>::generic_type == 0> w(&fs);
-    w(vec);
-    return fs;
+    WriteStructContext ws(fs, name, CV_NODE_SEQ+(DataType<_Tp>::fmt != 0 ? CV_NODE_FLOW : 0));
+    write(fs, vec);
 }
 
 CV_EXPORTS_W void write( FileStorage& fs, const string& name, const Mat& value );
@@ -2636,6 +2989,9 @@ CV_EXPORTS FileStorage& operator << (FileStorage& fs, const string& str);
 static inline FileStorage& operator << (FileStorage& fs, const char* str)
 { return (fs << string(str)); }
 
+static inline FileStorage& operator << (FileStorage& fs, char* value)
+{ return (fs << string(value)); }
+
 inline FileNode::FileNode() : fs(0), node(0) {}
 inline FileNode::FileNode(const CvFileStorage* _fs, const CvFileNode* _node)
     : fs(_fs), node(_node) {}
@@ -2654,8 +3010,8 @@ inline bool FileNode::isNamed() const { return !node ? false : (node->tag & NAME
 inline size_t FileNode::size() const
 {
     int t = type();
-    return t == MAP ? ((CvSet*)node->data.map)->active_count :
-        t == SEQ ? node->data.seq->total : node != 0;
+    return t == MAP ? (size_t)((CvSet*)node->data.map)->active_count :
+        t == SEQ ? (size_t)node->data.seq->total : (size_t)!isNone();
 }
 
 inline CvFileNode* FileNode::operator *() { return (CvFileNode*)node; }
@@ -2717,6 +3073,58 @@ static inline void read(const FileNode& node, string& value, const string& defau
     value = !node.node ? default_value : CV_NODE_IS_STRING(node.node->tag) ? string(node.node->data.str.ptr) : string("");
 }
 
+template<typename _Tp> static inline void read(const FileNode& node, Point_<_Tp>& value, const Point_<_Tp>& default_value)
+{
+    vector<_Tp> temp; FileNodeIterator it = node.begin(); it >> temp;
+    value = temp.size() != 2 ? default_value : Point_<_Tp>(saturate_cast<_Tp>(temp[0]), saturate_cast<_Tp>(temp[1]));
+}
+
+template<typename _Tp> static inline void read(const FileNode& node, Point3_<_Tp>& value, const Point3_<_Tp>& default_value)
+{
+    vector<_Tp> temp; FileNodeIterator it = node.begin(); it >> temp;
+    value = temp.size() != 3 ? default_value : Point3_<_Tp>(saturate_cast<_Tp>(temp[0]), saturate_cast<_Tp>(temp[1]),
+                                                            saturate_cast<_Tp>(temp[2]));
+}
+
+template<typename _Tp> static inline void read(const FileNode& node, Size_<_Tp>& value, const Size_<_Tp>& default_value)
+{
+    vector<_Tp> temp; FileNodeIterator it = node.begin(); it >> temp;
+    value = temp.size() != 2 ? default_value : Size_<_Tp>(saturate_cast<_Tp>(temp[0]), saturate_cast<_Tp>(temp[1]));
+}
+
+template<typename _Tp> static inline void read(const FileNode& node, Complex<_Tp>& value, const Complex<_Tp>& default_value)
+{
+    vector<_Tp> temp; FileNodeIterator it = node.begin(); it >> temp;
+    value = temp.size() != 2 ? default_value : Complex<_Tp>(saturate_cast<_Tp>(temp[0]), saturate_cast<_Tp>(temp[1]));
+}
+
+template<typename _Tp> static inline void read(const FileNode& node, Rect_<_Tp>& value, const Rect_<_Tp>& default_value)
+{
+    vector<_Tp> temp; FileNodeIterator it = node.begin(); it >> temp;
+    value = temp.size() != 4 ? default_value : Rect_<_Tp>(saturate_cast<_Tp>(temp[0]), saturate_cast<_Tp>(temp[1]),
+                                                          saturate_cast<_Tp>(temp[2]), saturate_cast<_Tp>(temp[3]));
+}
+
+template<typename _Tp, int cn> static inline void read(const FileNode& node, Vec<_Tp, cn>& value, const Vec<_Tp, cn>& default_value)
+{
+    vector<_Tp> temp; FileNodeIterator it = node.begin(); it >> temp;
+    value = temp.size() != cn ? default_value : Vec<_Tp, cn>(&temp[0]);
+}
+
+template<typename _Tp> static inline void read(const FileNode& node, Scalar_<_Tp>& value, const Scalar_<_Tp>& default_value)
+{
+    vector<_Tp> temp; FileNodeIterator it = node.begin(); it >> temp;
+    value = temp.size() != 4 ? default_value : Scalar_<_Tp>(saturate_cast<_Tp>(temp[0]), saturate_cast<_Tp>(temp[1]),
+                                                            saturate_cast<_Tp>(temp[2]), saturate_cast<_Tp>(temp[3]));
+}
+
+static inline void read(const FileNode& node, Range& value, const Range& default_value)
+{
+    Point2i temp(value.start, value.end); const Point2i default_temp = Point2i(default_value.start, default_value.end);
+    read(node, temp, default_temp);
+    value.start = temp.x; value.end = temp.y;
+}
+
 CV_EXPORTS_W void read(const FileNode& node, Mat& mat, const Mat& default_mat=Mat() );
 CV_EXPORTS void read(const FileNode& node, SparseMat& mat, const SparseMat& default_mat=SparseMat() );
 
@@ -2750,7 +3158,7 @@ inline void FileNode::readRaw( const string& fmt, uchar* vec, size_t len ) const
     begin().readRaw( fmt, vec, len );
 }
 
-template<typename _Tp, int numflag> class CV_EXPORTS VecReaderProxy
+template<typename _Tp, int numflag> class VecReaderProxy
 {
 public:
     VecReaderProxy( FileNodeIterator* _it ) : it(_it) {}
@@ -2764,7 +3172,7 @@ public:
     FileNodeIterator* it;
 };
 
-template<typename _Tp> class CV_EXPORTS VecReaderProxy<_Tp,1>
+template<typename _Tp> class VecReaderProxy<_Tp,1>
 {
 public:
     VecReaderProxy( FileNodeIterator* _it ) : it(_it) {}
@@ -2776,7 +3184,7 @@ public:
         size_t remaining1 = remaining/cn;
         count = count < remaining1 ? count : remaining1;
         vec.resize(count);
-        it->readRaw( string(fmt), (uchar*)&vec[0], count*sizeof(_Tp) );
+        it->readRaw( string(fmt), !vec.empty() ? (uchar*)&vec[0] : 0, count*sizeof(_Tp) );
     }
     FileNodeIterator* it;
 };
@@ -2789,9 +3197,15 @@ read( FileNodeIterator& it, vector<_Tp>& vec, size_t maxCount=(size_t)INT_MAX )
 }
 
 template<typename _Tp> static inline void
-read( FileNode& node, vector<_Tp>& vec, const vector<_Tp>& default_value=vector<_Tp>() )
+read( const FileNode& node, vector<_Tp>& vec, const vector<_Tp>& default_value=vector<_Tp>() )
 {
-    read( node.begin(), vec );
+    if(!node.node)
+        vec = default_value;
+    else
+    {
+        FileNodeIterator it = node.begin();
+        read( it, vec );
+    }
 }
 
 inline FileNodeIterator FileNode::begin() const
@@ -2805,10 +3219,10 @@ inline FileNodeIterator FileNode::end() const
 }
 
 inline FileNode FileNodeIterator::operator *() const
-{ return FileNode(fs, (const CvFileNode*)reader.ptr); }
+{ return FileNode(fs, (const CvFileNode*)(void*)reader.ptr); }
 
 inline FileNode FileNodeIterator::operator ->() const
-{ return FileNode(fs, (const CvFileNode*)reader.ptr); }
+{ return FileNode(fs, (const CvFileNode*)(void*)reader.ptr); }
 
 template<typename _Tp> static inline FileNodeIterator& operator >> (FileNodeIterator& it, _Tp& value)
 { read( *it, value, _Tp()); return ++it; }
@@ -3072,19 +3486,19 @@ template<typename _Tp, class _LT> void sort( vector<_Tp>& vec, _LT LT=_LT() )
     }
 }
 
-template<typename _Tp> class CV_EXPORTS LessThan
+template<typename _Tp> class LessThan
 {
 public:
     bool operator()(const _Tp& a, const _Tp& b) const { return a < b; }
 };
 
-template<typename _Tp> class CV_EXPORTS GreaterEq
+template<typename _Tp> class GreaterEq
 {
 public:
     bool operator()(const _Tp& a, const _Tp& b) const { return a >= b; }
 };
 
-template<typename _Tp> class CV_EXPORTS LessThanIdx
+template<typename _Tp> class LessThanIdx
 {
 public:
     LessThanIdx( const _Tp* _arr ) : arr(_arr) {}
@@ -3092,7 +3506,7 @@ public:
     const _Tp* arr;
 };
 
-template<typename _Tp> class CV_EXPORTS GreaterEqIdx
+template<typename _Tp> class GreaterEqIdx
 {
 public:
     GreaterEqIdx( const _Tp* _arr ) : arr(_arr) {}
@@ -3331,10 +3745,10 @@ template<typename _Tp> inline Seq<_Tp>::operator vector<_Tp>() const
 template<typename _Tp> inline SeqIterator<_Tp>::SeqIterator()
 { memset(this, 0, sizeof(*this)); }
 
-template<typename _Tp> inline SeqIterator<_Tp>::SeqIterator(const Seq<_Tp>& seq, bool seekEnd)
+template<typename _Tp> inline SeqIterator<_Tp>::SeqIterator(const Seq<_Tp>& _seq, bool seekEnd)
 {
-    cvStartReadSeq(seq.seq, this);
-    index = seekEnd ? seq.seq->total : 0;
+    cvStartReadSeq(_seq.seq, this);
+    index = seekEnd ? _seq.seq->total : 0;
 }
 
 template<typename _Tp> inline void SeqIterator<_Tp>::seek(size_t pos)
@@ -3403,8 +3817,15 @@ template<typename _Tp> inline ptrdiff_t operator - (const SeqIterator<_Tp>& a,
                                                     const SeqIterator<_Tp>& b)
 {
     ptrdiff_t delta = a.index - b.index, n = a.seq->total;
+#if defined(__QNX__)
+    // No long std::abs(long) in QNX
+    long absdelta = (delta < 0) ? -delta : delta;
+    if( absdelta > n )
+#else
     if( std::abs(static_cast<long>(delta)) > n )
+#endif
         delta += delta < 0 ? n : -n;
+
     return delta;
 }
 
@@ -3421,18 +3842,19 @@ template<typename _Tp> inline bool operator != (const SeqIterator<_Tp>& a,
 }
 
 
-template<typename _ClsName> struct CV_EXPORTS RTTIImpl
+template<typename _ClsName> struct RTTIImpl
 {
 public:
     static int isInstance(const void* ptr)
     {
         static _ClsName dummy;
+        static void* dummyp = &dummy;
         union
         {
             const void* p;
             const void** pp;
         } a, b;
-        a.p = &dummy;
+        a.p = dummyp;
         b.p = ptr;
         return *a.pp == *b.pp;
     }
@@ -3496,23 +3918,6 @@ struct CV_EXPORTS Formatted
     vector<int> params;
 };
 
-
-/** Writes a point to an output stream in Matlab notation
- */
-template<typename _Tp> inline std::ostream& operator<<(std::ostream& out, const Point_<_Tp>& p)
-{
-    out << "[" << p.x << ", " << p.y << "]";
-    return out;
-}
-
-/** Writes a point to an output stream in Matlab notation
- */
-template<typename _Tp> inline std::ostream& operator<<(std::ostream& out, const Point3_<_Tp>& p)
-{
-    out << "[" << p.x << ", " << p.y << ", " << p.z << "]";
-    return out;
-}
-
 static inline Formatted format(const Mat& mtx, const char* fmt,
                                const vector<int>& params=vector<int>())
 {
@@ -3573,51 +3978,146 @@ template<typename _Tp> static inline std::ostream& operator << (std::ostream& ou
     return out;
 }
 
-/*template<typename _Tp> struct AlgorithmParamType {};
-template<> struct AlgorithmParamType<int> { enum { type = CV_PARAM_TYPE_INT }; };
-template<> struct AlgorithmParamType<double> { enum { type = CV_PARAM_TYPE_REAL }; };
-template<> struct AlgorithmParamType<string> { enum { type = CV_PARAM_TYPE_STRING }; };
-template<> struct AlgorithmParamType<Mat> { enum { type = CV_PARAM_TYPE_MAT }; };
 
-template<typename _Tp> _Tp Algorithm::get(int paramId) const
+/** Writes a Matx to an output stream.
+ */
+template<typename _Tp, int m, int n> inline std::ostream& operator<<(std::ostream& out, const Matx<_Tp, m, n>& matx)
 {
-    _Tp value = _Tp();
-    get_(paramId, AlgorithmParamType<_Tp>::type, &value);
+    out << cv::Mat(matx);
+    return out;
+}
+
+/** Writes a point to an output stream in Matlab notation
+ */
+template<typename _Tp> inline std::ostream& operator<<(std::ostream& out, const Point_<_Tp>& p)
+{
+    out << "[" << p.x << ", " << p.y << "]";
+    return out;
+}
+
+/** Writes a point to an output stream in Matlab notation
+ */
+template<typename _Tp> inline std::ostream& operator<<(std::ostream& out, const Point3_<_Tp>& p)
+{
+    out << "[" << p.x << ", " << p.y << ", " << p.z << "]";
+    return out;
+}
+
+/** Writes a Vec to an output stream. Format example : [10, 20, 30]
+ */
+template<typename _Tp, int n> inline std::ostream& operator<<(std::ostream& out, const Vec<_Tp, n>& vec)
+{
+    out << "[";
+
+    if(Vec<_Tp, n>::depth < CV_32F)
+    {
+        for (int i = 0; i < n - 1; ++i) {
+            out << (int)vec[i] << ", ";
+        }
+        out << (int)vec[n-1] << "]";
+    }
+    else
+    {
+        for (int i = 0; i < n - 1; ++i) {
+            out << vec[i] << ", ";
+        }
+        out << vec[n-1] << "]";
+    }
+
+    return out;
+}
+
+/** Writes a Size_ to an output stream. Format example : [640 x 480]
+ */
+template<typename _Tp> inline std::ostream& operator<<(std::ostream& out, const Size_<_Tp>& size)
+{
+    out << "[" << size.width << " x " << size.height << "]";
+    return out;
+}
+
+/** Writes a Rect_ to an output stream. Format example : [640 x 480 from (10, 20)]
+ */
+template<typename _Tp> inline std::ostream& operator<<(std::ostream& out, const Rect_<_Tp>& rect)
+{
+    out << "[" << rect.width << " x " << rect.height << " from (" << rect.x << ", " << rect.y << ")]";
+    return out;
+}
+
+
+template<typename _Tp> inline Ptr<_Tp> Algorithm::create(const string& name)
+{
+    return _create(name).ptr<_Tp>();
+}
+
+template<typename _Tp>
+inline void Algorithm::set(const char* _name, const Ptr<_Tp>& value)
+{
+    Ptr<Algorithm> algo_ptr = value. template ptr<cv::Algorithm>();
+    if (algo_ptr.empty()) {
+        CV_Error( CV_StsUnsupportedFormat, "unknown/unsupported Ptr type of the second parameter of the method Algorithm::set");
+    }
+    info()->set(this, _name, ParamType<Algorithm>::type, &algo_ptr);
+}
+
+template<typename _Tp>
+inline void Algorithm::set(const string& _name, const Ptr<_Tp>& value)
+{
+    this->set<_Tp>(_name.c_str(), value);
+}
+
+template<typename _Tp>
+inline void Algorithm::setAlgorithm(const char* _name, const Ptr<_Tp>& value)
+{
+    Ptr<Algorithm> algo_ptr = value. template ptr<cv::Algorithm>();
+    if (algo_ptr.empty()) {
+        CV_Error( CV_StsUnsupportedFormat, "unknown/unsupported Ptr type of the second parameter of the method Algorithm::set");
+    }
+    info()->set(this, _name, ParamType<Algorithm>::type, &algo_ptr);
+}
+
+template<typename _Tp>
+inline void Algorithm::setAlgorithm(const string& _name, const Ptr<_Tp>& value)
+{
+    this->set<_Tp>(_name.c_str(), value);
+}
+
+template<typename _Tp> inline typename ParamType<_Tp>::member_type Algorithm::get(const string& _name) const
+{
+    typename ParamType<_Tp>::member_type value;
+    info()->get(this, _name.c_str(), ParamType<_Tp>::type, &value);
     return value;
 }
 
-template<typename _Tp> bool Algorithm::set(int paramId, const _Tp& value)
+template<typename _Tp> inline typename ParamType<_Tp>::member_type Algorithm::get(const char* _name) const
 {
-    set_(paramId, AlgorithmParamType<_Tp>::type, &value);
+    typename ParamType<_Tp>::member_type value;
+    info()->get(this, _name, ParamType<_Tp>::type, &value);
     return value;
 }
 
-template<typename _Tp> _Tp Algorithm::paramDefaultValue(int paramId) const
+template<typename _Tp, typename _Base> inline void AlgorithmInfo::addParam(Algorithm& algo, const char* parameter,
+                  Ptr<_Tp>& value, bool readOnly, Ptr<_Tp> (Algorithm::*getter)(), void (Algorithm::*setter)(const Ptr<_Tp>&),
+                  const string& help)
 {
-    _Tp value = _Tp();
-    paramDefaultValue_(paramId, AlgorithmParamType<_Tp>::type, &value);
-    return value;
+    //TODO: static assert: _Tp inherits from _Base
+    addParam_(algo, parameter, ParamType<_Base>::type, &value, readOnly,
+              (Algorithm::Getter)getter, (Algorithm::Setter)setter, help);
 }
 
-template<typename _Tp> bool Algorithm::paramRange(int paramId, _Tp& minVal, _Tp& maxVal) const
+template<typename _Tp> inline void AlgorithmInfo::addParam(Algorithm& algo, const char* parameter,
+                  Ptr<_Tp>& value, bool readOnly, Ptr<_Tp> (Algorithm::*getter)(), void (Algorithm::*setter)(const Ptr<_Tp>&),
+                  const string& help)
 {
-    return paramRange_(paramId, AlgorithmParamType<_Tp>::type, &minVal, &maxVal);
+    //TODO: static assert: _Tp inherits from Algorithm
+    addParam_(algo, parameter, ParamType<Algorithm>::type, &value, readOnly,
+              (Algorithm::Getter)getter, (Algorithm::Setter)setter, help);
 }
 
-template<typename _Tp> void Algorithm::addParam(int propId, _Tp& value, bool readOnly, const string& name,
-                                         const string& help, const _Tp& defaultValue,
-                                         _Tp (Algorithm::*getter)(), bool (Algorithm::*setter)(const _Tp&))
-{
-    addParam_(propId, AlgorithmParamType<_Tp>::type, &value, readOnly, name, help, &defaultValue,
-             (void*)getter, (void*)setter);
 }
 
-template<typename _Tp> void Algorithm::setParamRange(int propId, const _Tp& minVal, const _Tp& maxVal)
-{
-    setParamRange_(propId, AlgorithmParamType<_Tp>::type, &minVal, &maxVal);
-}*/
-
-}
+#ifdef _MSC_VER
+# pragma warning(pop)
+#endif
 
 #endif // __cplusplus
 #endif

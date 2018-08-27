@@ -49,7 +49,7 @@
 #include "opencv2/core/core_c.h"
 #include <stdio.h>
 
-#if _MSC_VER >= 1200 || defined __BORLANDC__
+#if (defined _MSC_VER && _MSC_VER >= 1200) || defined __BORLANDC__
 #define cv_stricmp stricmp
 #define cv_strnicmp strnicmp
 #if defined WINCE
@@ -791,16 +791,16 @@ struct CvBlobTrackerAutoParam1
 
     CvFGDetector*           pFG;           /* FGDetector module. If this field is NULL the Process FG mask is used. */
 
-    CvBlobDetector*         pBD;           /* Selected blob detector module.                         */
+    CvBlobDetector*         pBD;           /* Selected blob detector module. 					    */
                                            /* If this field is NULL default blobdetector module will be created.    */
 
-    CvBlobTracker*          pBT;           /* Selected blob tracking module.                        */
+    CvBlobTracker*          pBT;           /* Selected blob tracking module.					    */
                                            /* If this field is NULL default blobtracker module will be created.     */
 
-    CvBlobTrackGen*         pBTGen;        /* Selected blob trajectory generator.                    */
+    CvBlobTrackGen*         pBTGen;        /* Selected blob trajectory generator.				    */
                                            /* If this field is NULL no generator is used.                           */
 
-    CvBlobTrackPostProc*    pBTPP;         /* Selected blob trajectory postprocessing module.                */
+    CvBlobTrackPostProc*    pBTPP;         /* Selected blob trajectory postprocessing module.			    */
                                            /* If this field is NULL no postprocessing is done.                      */
 
     int                     UsePPData;

@@ -76,7 +76,7 @@ class PooledAllocator
     /* We maintain memory alignment to word boundaries by requiring that all
         allocations be in multiples of the machine wordsize.  */
     /* Size of machine word in bytes.  Must be power of 2. */
-    /* Minimum number of bytes requested at a time from    the system.  Must be multiple of WORDSIZE. */
+    /* Minimum number of bytes requested at a time from	the system.  Must be multiple of WORDSIZE. */
 
 
     int     remaining;  /* Number of bytes left in current block of storage. */
@@ -92,9 +92,9 @@ public:
     /**
         Default constructor. Initializes a new pool.
      */
-    PooledAllocator(int blocksize = BLOCKSIZE)
+    PooledAllocator(int blockSize = BLOCKSIZE)
     {
-        this->blocksize = blocksize;
+        blocksize = blockSize;
         remaining = 0;
         base = NULL;
 
@@ -122,7 +122,7 @@ public:
      */
     void* allocateMemory(int size)
     {
-        int blocksize;
+        int blockSize;
 
         /* Round size up to a multiple of wordsize.  The following expression
             only works for WORDSIZE that is a power of 2, by masking last bits of
@@ -138,11 +138,11 @@ public:
             wastedMemory += remaining;
 
             /* Allocate new storage. */
-            blocksize = (size + sizeof(void*) + (WORDSIZE-1) > BLOCKSIZE) ?
+            blockSize = (size + sizeof(void*) + (WORDSIZE-1) > BLOCKSIZE) ?
                         size + sizeof(void*) + (WORDSIZE-1) : BLOCKSIZE;
 
             // use the standard C malloc to allocate memory
-            void* m = ::malloc(blocksize);
+            void* m = ::malloc(blockSize);
             if (!m) {
                 fprintf(stderr,"Failed to allocate memory.\n");
                 return NULL;
@@ -155,7 +155,7 @@ public:
             int shift = 0;
             //int shift = (WORDSIZE - ( (((size_t)m) + sizeof(void*)) & (WORDSIZE-1))) & (WORDSIZE-1);
 
-            remaining = blocksize - sizeof(void*) - shift;
+            remaining = blockSize - sizeof(void*) - shift;
             loc = ((char*)m + sizeof(void*) + shift);
         }
         void* rloc = loc;

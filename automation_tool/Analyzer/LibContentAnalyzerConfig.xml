@@ -1,0 +1,31 @@
+<AnalyzerBrightnessCompare ratio_th="0.8" brightness_lower_bound="10" brightness_upper_bound="240"/>
+<AnalyzerContrastCompare parameter_threshold="0.6"/>
+<AnalyzerExposureCompare parameter_threshold="0.8"/>
+<AnalyzerFocusCompare kernel_size="16" average_threshold="0.8" local_threshold="0.8" scale_threshold="1.001"/>
+<AnalyzerHueCompare s_th="40" v_th="40" h_range="15" ratio_th="0.8"/>
+<AnalyzerTorchCompare parameter_threshold="0.15" parameter_deltal_th="10"/>
+<AnalyzerWhiteBalanceCompare Y_threshold="100" G_threshold="0.5"/>
+<AnalyzerZoomCompare lower_bound_coefficient="0.3" parameter_threshold="0.7" kernel_size="16"/>
+<AnalyzerFOVCompare hfov_loss_th="0.1" vfov_loss_th="0.1"/>
+<AnalyzerSimilarityCompare kerenel_size="16" local_threshold="0.4" global_threshold="0.68" filter_width="3" filter_height="3" neighbor_count_th="3"/>
+<AnalyzerColorEffectNegative pass_ratio="0.9" var_th="0.3"/>
+<AnalyzerColorEffectGrassGreen pass_ratio="0.7" var_th="0"/>
+<AnalyzerColorEffectMono pass_ratio="0.85" var_th="0.2"/>
+<AnalyzerColorEffectSepia pass_ratio="0.8" var_th="0"/>
+<AnalyzerColorEffectSkyBlue pass_ratio="0.7" var_th="0"/>
+<AnalyzerColorEffectSkinWhiten pass_ratio="0.8" var_th="0"/>
+<AnalyzerHDRCompare luminance_diff_th="20" change_are_min_ratio="0.015625" sharpness_ratio_th="0.01"/>
+<AnalyzerJpegQualityCompare method_name="PSNR" psnr_threshold="30" ssim_threshold="0.8" kernel_size="16"/>
+<AnalyzerThumbnailCompare parameter_threshold="0.8" kernel_size="16"/>
+<AnalyzerGDCCompare varTH="100"/>
+<Analyzer3AAutoConsistent consistent_count_threshold="10" exposure_threshold="10" brightness_threshold="10" hue_h_threshold="10" hue_s_threshold="10" hue_v_threshold="30" ratio_threshold="0.25"/>
+<AnalyzerVideoBasic ratio_threshold="0.25"/>
+<AnalyzerULLCompare />
+<AnalyzerAutoAWBCompare />
+<AnalyzerAutoAECompare />
+<AnalyzerAutoAFCompare />
+<AnalyzerColorcastCompare ratio_th="25" m_color_count_upper_bound="5"/>
+<AnalyzerGreenCorruption green_b_max="1" green_g_min="50" green_r_max="1" grenn_line_ratio_th="0.2" line_pixel_var_th="0.1" line_pixel_average_th_low="10.0" line_pixel_average_th_high="245.0" />
+<AnalyzerATECompare ratio_th="0.01"  ATE_tolerance="25"/>
+<AnalyzerChessboardCompare epsilon="0.01"  max_count="30"/>
+<AnalyzerCameraPositionCompare />

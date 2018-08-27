@@ -105,7 +105,7 @@ CVAPI(void)  cvResetImageROI( IplImage* image );
 /* Retrieves image ROI */
 CVAPI(CvRect) cvGetImageROI( const IplImage* image );
 
-/* Allocates and initalizes CvMat header */
+/* Allocates and initializes CvMat header */
 CVAPI(CvMat*)  cvCreateMatHeader( int rows, int cols, int type );
 
 #define CV_AUTOSTEP  0x7fffffff
@@ -666,7 +666,7 @@ CVAPI(int) cvSolveCubic( const CvMat* coeffs, CvMat* roots );
 
 /* Finds all real and complex roots of a polynomial equation */
 CVAPI(void) cvSolvePoly(const CvMat* coeffs, CvMat *roots2,
-            int maxiter CV_DEFAULT(20), int fig CV_DEFAULT(100));
+      int maxiter CV_DEFAULT(20), int fig CV_DEFAULT(100));
 
 /****************************************************************************************\
 *                                Matrix operations                                       *
@@ -940,11 +940,11 @@ CVAPI(void*) cvMemStorageAlloc( CvMemStorage* storage, size_t size );
 
 /* Allocates string in memory storage */
 CVAPI(CvString) cvMemStorageAllocString( CvMemStorage* storage, const char* ptr,
-                                        int len CV_DEFAULT(-1) );
+                                         int len CV_DEFAULT(-1) );
 
 /* Creates new empty sequence that will reside in the specified storage */
-CVAPI(CvSeq*)  cvCreateSeq( int seq_flags, int header_size,
-                            int elem_size, CvMemStorage* storage );
+CVAPI(CvSeq*)  cvCreateSeq( int seq_flags, size_t header_size,
+                            size_t elem_size, CvMemStorage* storage );
 
 /* Changes default size (granularity) of sequence blocks.
    The default size is ~1Kbyte */
@@ -1107,7 +1107,7 @@ CV_INLINE  CvSetElem* cvSetNew( CvSet* set_header )
         set_header->active_count++;
     }
     else
-        cvSetAdd( set_header, NULL, (CvSetElem**)&elem );
+        cvSetAdd( set_header, NULL, &elem );
     return elem;
 }
 
@@ -1127,9 +1127,9 @@ CVAPI(void)   cvSetRemove( CvSet* set_header, int index );
 
 /* Returns a set element by index. If the element doesn't belong to the set,
    NULL is returned */
-CV_INLINE CvSetElem* cvGetSetElem( const CvSet* set_header, int index )
+CV_INLINE CvSetElem* cvGetSetElem( const CvSet* set_header, int idx )
 {
-    CvSetElem* elem = (CvSetElem*)cvGetSeqElem( (CvSeq*)set_header, index );
+    CvSetElem* elem = (CvSetElem*)(void *)cvGetSeqElem( (CvSeq*)set_header, idx );
     return elem && CV_IS_SET_ELEM( elem ) ? elem : 0;
 }
 
@@ -1374,17 +1374,17 @@ CVAPI(int)  cvInitLineIterator( const CvArr* image, CvPoint pt1, CvPoint pt2,
 /* Font structure */
 typedef struct CvFont
 {
-    const char* nameFont;        //Qt:nameFont
-    CvScalar color;                //Qt:ColorFont -> cvScalar(blue_component, green_component, red\_component[, alpha_component])
-    int         font_face;         //Qt: bool italic         /* =CV_FONT_* */
-    const int*  ascii;             /* font data and metrics */
+  const char* nameFont;   //Qt:nameFont
+  CvScalar color;       //Qt:ColorFont -> cvScalar(blue_component, green_component, red\_component[, alpha_component])
+    int         font_face;    //Qt: bool italic         /* =CV_FONT_* */
+    const int*  ascii;      /* font data and metrics */
     const int*  greek;
     const int*  cyrillic;
     float       hscale, vscale;
-    float       shear;             /* slope coefficient: 0 - normal, >0 - italic */
-    int         thickness;         //Qt: weight               /* letters thickness */
-    float       dx;             /* horizontal interval between letters */
-    int         line_type;        //Qt: PointSize
+    float       shear;      /* slope coefficient: 0 - normal, >0 - italic */
+    int         thickness;    //Qt: weight               /* letters thickness */
+    float       dx;       /* horizontal interval between letters */
+    int         line_type;    //Qt: PointSize
 }
 CvFont;
 
@@ -1706,6 +1706,7 @@ CVAPI(double) cvGetTickFrequency( void );
 #define CV_CPU_SSE4_2  7
 #define CV_CPU_POPCNT  8
 #define CV_CPU_AVX    10
+#define CV_CPU_AVX2   11
 #define CV_HARDWARE_MAX_FEATURE 255
 
 CVAPI(int) cvCheckHardwareSupport(int feature);
